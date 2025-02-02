@@ -4,6 +4,9 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
+@onready var interaction_raycast = %raycast3d #Make sure the node reference is set correctly
+@onready var interaction_label = %Label
+var interaction_is_reset : bool = true
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
@@ -21,6 +24,12 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		var MouseEvent = event.relative * MouseSensitivity
 		CameraLook(MouseEvent)
+	if event.is_action_pressed("ui_interact"): #Adjust to match your InputMap
+		if interaction_raycast.is_colliding():
+			var interactable = interaction_raycast.get_collider()
+			if interactable.has_method("interact"):
+				interactable.interact(self) # Calls the interact func
+				
 		
 func CameraLook(Movement: Vector2):
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -33,6 +42,21 @@ func CameraLook(Movement: Vector2):
 		
 		rotate_object_local(Vector3(0,1,0), -CameraRotation.x) # first rotate y
 		MainCamera.rotate_object_local(Vector3(1,0,0), -CameraRotation.y) #then rotate x
+
+func _process(_delta):
+	if interaction_raycast.is_colliding():
+		var interactable = interaction_raycast.get_collider()
+		interaction_is_reset = false
+		if interactable != null and interactable.has_method("interact"):
+			interaction_label.text = "Press E to interact"
+		else:
+			interaction_label.text = ""
+
+	else:
+		if !interaction_is_reset:
+			interaction_label.text = ""
+			interaction_is_reset = true
+
 
 func _physics_process(delta):
 	# Add the gravity.
