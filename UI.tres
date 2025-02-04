@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ceb54j815ji87"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mkurb"]
+
+[resource]
+/colors/orange = Color(0.937109, 0.479151, 0, 1)
+Label/colors/font_color = Color(0.885915, 0.505474, 0, 1)
+ProgressBar/colors/font_color = Color(0.886275, 0.505882, 0, 1)
+ProgressBar/styles/background = SubResource("StyleBoxEmpty_mkurb")

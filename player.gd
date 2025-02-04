@@ -48,7 +48,7 @@ func _process(_delta):
 		var interactable = interaction_raycast.get_collider()
 		interaction_is_reset = false
 		if interactable != null and interactable.has_method("interact"):
-			interaction_label.text = "Press E to interact"
+			interaction_label.text = "E to interact"
 		else:
 			interaction_label.text = ""
 
