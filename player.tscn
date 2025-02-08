@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_brkr6"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
 size = Vector2(50, 50)
 
 [node name="Player" type="CharacterBody3D"]
@@ -13,7 +13,7 @@ transform = Transform3D(0.999008, 0, 0, 0, 0.999008, 0, 0, 0, 0.999008, 0, 0, 0)
 input_ray_pickable = false
 script = ExtResource("1_xq87f")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+[node name="Body" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05494, 0)
 shape = SubResource("CapsuleShape3D_qc8b6")
 
@@ -25,59 +25,68 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, -2, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+[node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="Camera3D/CanvasLayer"]
+[node name="Panel" type="Panel" parent="HUD"]
 offset_top = 560.0
-offset_right = 235.0
+offset_right = 333.0
 offset_bottom = 646.0
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Camera3D/CanvasLayer/Panel"]
-layout_mode = 0
-offset_right = 235.0
-offset_bottom = 86.0
+[node name="HSplitContainer" type="HSplitContainer" parent="HUD/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.5
+offset_top = -43.0
+offset_right = 166.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Health_Container" type="VSplitContainer" parent="Camera3D/CanvasLayer/Panel/HSplitContainer"]
+[node name="Health_Container" type="VSplitContainer" parent="HUD/Panel/HSplitContainer"]
 layout_mode = 2
 
-[node name="Meter_Health" type="ProgressBar" parent="Camera3D/CanvasLayer/Panel/HSplitContainer/Health_Container"]
+[node name="Meter_Health" type="ProgressBar" parent="HUD/Panel/HSplitContainer/Health_Container"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ecp58")
 
-[node name="Label_Health" type="Label" parent="Camera3D/CanvasLayer/Panel/HSplitContainer/Health_Container"]
-unique_name_in_owner = true
+[node name="Label_Health" type="Label" parent="HUD/Panel/HSplitContainer/Health_Container"]
 layout_mode = 2
 theme = ExtResource("2_ecp58")
 theme_override_font_sizes/font_size = 20
 text = "Health"
 horizontal_alignment = 1
 
-[node name="Food_Container" type="VSplitContainer" parent="Camera3D/CanvasLayer/Panel/HSplitContainer"]
+[node name="Food_Container" type="VSplitContainer" parent="HUD/Panel/HSplitContainer"]
 layout_mode = 2
 
-[node name="Meter_Food" type="ProgressBar" parent="Camera3D/CanvasLayer/Panel/HSplitContainer/Food_Container"]
+[node name="Meter_Food" type="ProgressBar" parent="HUD/Panel/HSplitContainer/Food_Container"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ecp58")
 
-[node name="Label_Food" type="Label" parent="Camera3D/CanvasLayer/Panel/HSplitContainer/Food_Container"]
+[node name="Label_Food" type="Label" parent="HUD/Panel/HSplitContainer/Food_Container"]
 layout_mode = 2
 theme = ExtResource("2_ecp58")
 theme_override_font_sizes/font_size = 20
-text = "Health"
+text = "Food"
 horizontal_alignment = 1
 
-[node name="VSplitContainer" type="VSplitContainer" parent="Camera3D/CanvasLayer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="HUD"]
 offset_left = 540.0
 offset_top = 272.0
 offset_right = 598.0
 offset_bottom = 295.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Camera3D/CanvasLayer/VSplitContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="HUD/VSplitContainer"]
 position = Vector2(28, 49)
-texture = SubResource("PlaceholderTexture2D_brkr6")
+texture = SubResource("PlaceholderTexture2D_6kryx")
 
-[node name="Label" type="Label" parent="Camera3D/CanvasLayer/VSplitContainer"]
+[node name="Label" type="Label" parent="HUD/VSplitContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ecp58")
