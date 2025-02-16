@@ -83,7 +83,8 @@ offset_right = 598.0
 offset_bottom = 295.0
 
 [node name="Sprite2D" type="Sprite2D" parent="HUD/VSplitContainer"]
-position = Vector2(28, 49)
+position = Vector2(29, 48)
+scale = Vector2(0.0200001, 0.94)
 texture = SubResource("PlaceholderTexture2D_6kryx")
 
 [node name="Label" type="Label" parent="HUD/VSplitContainer"]

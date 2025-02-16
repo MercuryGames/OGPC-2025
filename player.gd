@@ -12,6 +12,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
 var MouseSensitivity = 0.001
 
+var inventory = []
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -29,6 +31,10 @@ func _input(event):
 			var interactable = interaction_raycast.get_collider()
 			if interactable.has_method("interact"):
 				interactable.interact(self) # Calls the interact func
+			elif interactable.has_method("yoink"):
+				print(interactable.id)
+				interactable.yoink(self)
+				interactable.hide()
 				
 		
 func CameraLook(Movement: Vector2):
@@ -49,6 +55,8 @@ func _process(_delta):
 		interaction_is_reset = false
 		if interactable != null and interactable.has_method("interact"):
 			interaction_label.text = "E to interact"
+		if interactable != null and interactable.has_method("yoink"):
+			interaction_label.text = "E to yoink"
 		else:
 			interaction_label.text = ""
 
@@ -65,7 +73,9 @@ func _physics_process(delta):
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y += JUMP_VELOCITY
+		if Input.is_action_pressed("ui_up"):
+			velocity.x += 0.0001
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
