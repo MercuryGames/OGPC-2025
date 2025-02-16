@@ -1,0 +1,52 @@
+extends RigidBody3D
+
+@onready var player = %Player
+
+var is_grabbed = false
+var id = [100,1]
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+var posDiffpast = Vector3(0,0,0)
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+func _physics_process(delta: float):
+	# Process for making object move to pointer
+	if is_grabbed == true:
+		gravity_scale = 0
+		#get Current position
+		var cpos = get_global_position()
+		#print("cpos",cpos)
+		#get position of the player's pointer
+		var tpos = player.grabpoint.get_global_position()
+		#print("tpos",tpos)
+		#find the differance
+		var posDiff = tpos - cpos
+		#print("posDiff",posDiff)
+		var proportional_force = posDiff*1.4 #get the propotional error
+		#print("proportional", proportional_force)
+		var dirivitive_force = 0.5*((posDiff-posDiffpast)/delta)
+		#print("dirivative", dirivitive_force)
+		var intergral_force = 1*(posDiff*delta)
+		var total_force = (proportional_force+dirivitive_force+intergral_force)*10
+		#print("total",total_force)
+		posDiffpast = posDiff
+		apply_central_force(total_force)
+	elif is_grabbed == false:
+		gravity_scale = 1
+
+
+func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if event.is_action_pressed("ui_interact"):
+		print(10901010)
+
+func interact(event):
+	if is_grabbed == false:
+		is_grabbed = true
+	else:
+		is_grabbed = false
+	print(19191)
+	

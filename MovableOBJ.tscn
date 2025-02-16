@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4np2eak8haw4"]
+
+[ext_resource type="Script" path="res://MovebleObject.gd" id="1_3nyqv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ku6tt"]
+friction = 0.3
+bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_twxeo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdr0y"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wcmmb"]
+material = SubResource("StandardMaterial3D_qdr0y")
+
+[sub_resource type="Skin" id="Skin_1uhl6"]
+
+[node name="RigidBody3D" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_ku6tt")
+can_sleep = false
+script = ExtResource("1_3nyqv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_twxeo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wcmmb")
+skin = SubResource("Skin_1uhl6")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
