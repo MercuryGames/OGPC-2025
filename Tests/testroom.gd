@@ -19,9 +19,14 @@ func _on_player_item_spawned(id: Variant) -> void:
 	var spawny = player.get_global_position().y + 1
 	var spawnz = player.get_global_position().z + 1
 	print(spawnx,spawny,spawnz)
-	if id == 100:
+	if id[0] == 100:
 		print(id)
 		var balll = ball.instantiate()
-		balll.initialize(spawnx,spawny,spawnz)
+		
+		balll.initialize(spawnx,spawny,spawnz,id,%Player)
+		
 		add_child(balll)
+		
+		balll.define_things()
+		
 		

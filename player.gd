@@ -1,8 +1,11 @@
 extends CharacterBody3D
 @onready var MainCamera = get_node("Camera3D")
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+@export_category("Movement")
+@export var run_multiplier: float
+@export var base_speed = 5.0
+@export var JUMP_VELOCITY = 4.5
+@onready var SPEED = base_speed
 
 @onready var interaction_raycast = %raycast3d #Make sure the node reference is set correctly
 @onready var interaction_label = %Label
@@ -13,10 +16,26 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
 var MouseSensitivity = 0.001
 
-var inventoryState = 0
-var inventory = []
-var inventoryItemNumber = 0
+var inventoryState = 0 #whether the inventory menu is open or closed
+var inventory = [] #the inventory array
+#var inventoryItemNumber = 0 #number of items in the inventory array
 @onready var inventoryList = %Items
+
+var health = 100
+var hunger = 100
+var hydration = 100 
+@onready var health_bar = %Meter_Health
+@onready var food_bar = %Meter_Food
+@onready var hydration_bar = %Meter_Hydration
+@export_category("Hunger and Hydration Stats")
+@export var food_drain_passive: float
+@export var food_drain_buff_walking: float
+@export var food_drain_buff_running: float
+@export var hydration_drain_passive: float
+@export var hydration_drain_buff_walking: float
+@export var hydration_drain_buff_running: float
+@export var starvation_damage: float
+@export var dehydration_damage: float
 
 signal item_spawned(id)
 
@@ -37,19 +56,24 @@ func _input(event):
 	if event.is_action_pressed("ui_interact") and holding_object == false: #Adjust to match your InputMap
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
-			if interactable.has_method("interact"):
-				interactable.interact(self) # Calls the interact func
-				holding_object = true
-				object_held = interactable
-			elif interactable.has_method("yoink"):
+			print(interactable.id)
+			if interactable.id[6] == true:
 				print(interactable.id)
-				inventoryItemNumber += 1
+				#inventoryItemNumber += 1
 				inventory.append(interactable.id)
-				inventoryList.add_item(str(interactable.id[0]), null, true)
+				inventoryList.add_item(str(interactable.id[0],",",interactable.id[4]), null, true)
 				interactable.yoink(self)
 				interactable.hide()
-	elif event.is_action_pressed("ui_interact") and holding_object == true:
-		object_held.interact(self)
+	elif event.is_action_pressed("ui_grab") and holding_object == false:
+		if interaction_raycast.is_colliding():
+			var interactable = interaction_raycast.get_collider()
+			print(interactable.id)
+			if interactable.id[5]==true:
+				interactable.grab(self) # Calls the grab function
+				holding_object = true
+				object_held = interactable
+	elif event.is_action_pressed("ui_grab") and holding_object == true:
+		object_held.grab(self)
 		holding_object = false
 		object_held = null
 		
@@ -76,19 +100,41 @@ func CameraLook(Movement: Vector2):
 		rotate_object_local(Vector3(0,1,0), -CameraRotation.x) # first rotate y
 		MainCamera.rotate_object_local(Vector3(1,0,0), -CameraRotation.y) #then rotate x
 
-func _process(_delta):
+func _process(delta):
+	if Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") and Input.is_action_pressed("run"):
+		hunger -= (food_drain_buff_running + food_drain_passive)*delta
+		hydration -= (hydration_drain_buff_running+hydration_drain_passive)*delta
+	elif Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down"):
+		hunger -= (food_drain_buff_walking+food_drain_passive)*delta
+		hydration -= (hydration_drain_buff_walking+hydration_drain_passive)*delta
+	else:
+		hunger -= food_drain_passive*delta
+		hydration -= hydration_drain_passive*delta
+	hunger = clamp(hunger,0,100)
+	hydration = clamp(hydration,0,100)
+	if hunger == 0:
+		health -= starvation_damage*delta
+	if hydration == 0:
+		health -= dehydration_damage*delta
+	
 	if interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
 		interaction_is_reset = false
-		if interactable != null and interactable.has_method("interact"):
-			interaction_label.text = "E to interact"
-		if interactable != null and interactable.has_method("yoink"):
+		if interactable != null and interactable.id[5] and interactable.id[6]:
+			interaction_label.text = "Q to grab|E to yoink"
+		if interactable != null and interactable.id[5]:
+			interaction_label.text = "Q to grab"
+		if interactable != null and interactable.id[6]:
 			interaction_label.text = "E to yoink"
 
 	else:
 		if !interaction_is_reset:
 			interaction_label.text = ""
 			interaction_is_reset = true
+			
+	health_bar.value = health
+	food_bar.value = hunger
+	hydration_bar.value = hydration
 	
 
 
@@ -107,6 +153,10 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if Input.is_action_pressed("run"):
+		SPEED = base_speed*run_multiplier
+	else:
+		SPEED = base_speed
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -116,10 +166,45 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+func use_item(index: int):
+	print(inventory[index])
+	if inventory[index][1] == 0:
+		item_spawned.emit(inventory[index])
+		inventoryList.remove_item(index)
+		inventory.pop(index)
+	elif inventory[index][1] == 1:
+		if inventory[index][2] == 0:
+			item_spawned.emit(inventory[index])
+			inventoryList.remove_item(index)
+			inventory.remove_at(index)
+		elif inventory[index][2] == 1:
+			health += inventory[index][3]
+			inventoryList.remove_item(index)
+			inventory.remove_at(index)
+		elif inventory[index][2] == 2:
+			hunger += inventory[index][3]
+			inventoryList.remove_item(index)
+			inventory.remove_at(index)
+		elif inventory[index][2] == 3:
+			hydration += inventory[index][3]
+			inventoryList.remove_item(index)
+			inventory.remove_at(index)
 
 func _on_items_item_activated(index: int) -> void:
-	print(inventory[index])
-	if inventory[index][1] == 1:
-		item_spawned.emit(inventory[index][0])
-	inventoryList.remove_item(index)
+	#print(inventory[index])
+	#if inventory[index][1] == 0:
+		#item_spawned.emit(inventory[index][0])
+		#inventoryList.remove_item(index)
+	#elif inventory[index][1] == 1:
+		#if inventory[index][2] == 0:
+			#item_spawned.emit(inventory[index][0])
+			#inventoryList.remove_item(index)
+		#elif inventory[index][2] == 1:
+			#health += inventory[index][3]
+		#elif inventory[index][2] == 2:
+			#hunger += inventory[index][3]
+		#elif inventory[index][2] == 3:
+			#hydration += inventory[index][3]
+	use_item(index)
+		
 	

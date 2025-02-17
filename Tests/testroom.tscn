@@ -30,14 +30,24 @@ transform = Transform3D(0.999008, 0, 0, 0, 0.999008, 0, 0, 0, 0.999008, 0.005415
 
 [node name="Cube" parent="." instance=ExtResource("2_hy5c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61407, 3.9233, -5.07273)
+obj_name = "Block 1"
+can_grab = true
+can_pickup = true
 
 [node name="Cube2" parent="." instance=ExtResource("2_hy5c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.45773, 2.6142, -4.04671)
+effect = 2
+effect_amount = 20
+obj_name = "Food Item 1"
+can_pickup = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999997, -0.00195045, 0.00131016, 0.000127856, 0.601947, 0.798536, -0.00234616, -0.798533, 0.601946, 0.281286, 98.4562, 31.0774)
 
 [node name="RigidBody3D" parent="." instance=ExtResource("4_ebjad")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.45238, 1.66891, 4.49756)
+obj_id = 201
+obj_name = "Moving Block"
+can_grab = true
 
 [connection signal="item_spawned" from="Player" to="." method="_on_player_item_spawned"]
