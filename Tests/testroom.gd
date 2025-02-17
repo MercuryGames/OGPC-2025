@@ -28,5 +28,3 @@ func _on_player_item_spawned(id: Variant) -> void:
 		add_child(balll)
 		
 		balll.define_things()
-		
-		

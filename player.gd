@@ -16,10 +16,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
 var MouseSensitivity = 0.001
 
-var inventoryState = 0 #whether the inventory menu is open or closed
+var inventoryState = false #whether the inventory menu is open or closed
 var inventory = [] #the inventory array
 #var inventoryItemNumber = 0 #number of items in the inventory array
 @onready var inventoryList = %Items
+var menu_state = false #whether the pause menu is open or closed
+@onready var pause_menu = %"Pause Menu"
+@onready var inventory_ui = %Inventory
 
 var health = 100
 var hunger = 100
@@ -41,15 +44,15 @@ signal item_spawned(id)
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pause_menu.hide()
+	inventory_ui.hide()
 	
 var holding_object = false
 var object_held
+
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		menu_controller(0)
 	if event is InputEventMouseMotion:
 		var MouseEvent = event.relative * MouseSensitivity
 		CameraLook(MouseEvent)
@@ -78,16 +81,31 @@ func _input(event):
 		object_held = null
 		
 	if event.is_action_pressed("ui_inventory"):
-		if inventoryState == 0:
-			%Inventory.show()
-			inventoryState = 1
+		menu_controller(1)
+
+func menu_controller(type):
+	if type == 0:
+		if menu_state == false:
+			get_tree().paused = true
+			pause_menu.show()
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			%Inventory.hide()
+			menu_state = true
+		elif menu_state == true:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			inventoryState = 0
-				
-		
+			pause_menu.hide()
+			get_tree().paused = false
+			menu_state = false
+	elif type == 1:
+		if inventoryState == false:
+			inventory_ui.show()
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			inventoryState = true
+		else:
+			inventory_ui.hide()
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			inventoryState = false
+			
+
 func CameraLook(Movement: Vector2):
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		CameraRotation += Movement
@@ -191,20 +209,8 @@ func use_item(index: int):
 			inventory.remove_at(index)
 
 func _on_items_item_activated(index: int) -> void:
-	#print(inventory[index])
-	#if inventory[index][1] == 0:
-		#item_spawned.emit(inventory[index][0])
-		#inventoryList.remove_item(index)
-	#elif inventory[index][1] == 1:
-		#if inventory[index][2] == 0:
-			#item_spawned.emit(inventory[index][0])
-			#inventoryList.remove_item(index)
-		#elif inventory[index][2] == 1:
-			#health += inventory[index][3]
-		#elif inventory[index][2] == 2:
-			#hunger += inventory[index][3]
-		#elif inventory[index][2] == 3:
-			#hydration += inventory[index][3]
 	use_item(index)
 		
-	
+
+func _on_button_return_game_pressed() -> void:
+	menu_controller(0)

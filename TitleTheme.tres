@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://kei32hqvvavi"]
+
+[resource]
+Button/font_sizes/font_size = 25
+Label/font_sizes/font_size = 80
+Label/fonts/font = null

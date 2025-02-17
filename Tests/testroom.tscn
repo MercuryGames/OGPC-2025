@@ -43,6 +43,7 @@ can_pickup = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999997, -0.00195045, 0.00131016, 0.000127856, 0.601947, 0.798536, -0.00234616, -0.798533, 0.601946, 0.281286, 98.4562, 31.0774)
+light_energy = 1.808
 
 [node name="RigidBody3D" parent="." instance=ExtResource("4_ebjad")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.45238, 1.66891, 4.49756)

@@ -22,7 +22,6 @@ func _ready() -> void:
 	if spawned:
 		id = id2
 	print(id[4], id)
-	player = %Player
 	print(player)
 	
 

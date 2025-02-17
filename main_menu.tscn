@@ -1,0 +1,103 @@
+[gd_scene load_steps=3 format=3 uid="uid://whscmncrw1q6"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_8jggc"]
+[ext_resource type="Theme" uid="uid://kei32hqvvavi" path="res://TitleTheme.tres" id="1_nqeav"]
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8jggc")
+
+[node name="menu_container" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="menu_container"]
+layout_mode = 2
+size_flags_vertical = 2
+theme = ExtResource("1_nqeav")
+text = "STORMRUNNER"
+horizontal_alignment = 1
+
+[node name="buttons_container" type="HBoxContainer" parent="menu_container"]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 3.0
+
+[node name="VSeparator" type="VSeparator" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="play_button" type="Button" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_nqeav")
+text = "Play"
+
+[node name="VSeparator2" type="VSeparator" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="load_button" type="Button" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_nqeav")
+text = "Load"
+
+[node name="VSeparator3" type="VSeparator" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="settings_button" type="Button" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_nqeav")
+text = "Settings"
+
+[node name="VSeparator4" type="VSeparator" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+
+[node name="quit_button" type="Button" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_nqeav")
+text = "Quit"
+
+[node name="VSeparator5" type="VSeparator" parent="menu_container/buttons_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="new_game_menu" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="new_game_start" type="Button" parent="new_game_menu"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "New Game"
+
+[connection signal="pressed" from="menu_container/buttons_container/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="menu_container/buttons_container/load_button" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="menu_container/buttons_container/settings_button" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="menu_container/buttons_container/quit_button" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="new_game_menu/new_game_start" to="." method="_on_new_game_start_pressed"]
