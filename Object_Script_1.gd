@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@onready var player = %Player
+@onready var player = get_parent().get_node("%Player")
 
 var is_grabbed = false
 var posDiffpast = Vector3(0,0,0)
@@ -79,5 +79,6 @@ func grab(event):
 	print(19191)
 	
 func define_things():
+	#player = %Player
+	#print(player)
 	pass
-	

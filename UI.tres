@@ -4,6 +4,13 @@
 
 [resource]
 /colors/orange = Color(0.937109, 0.479151, 0, 1)
+Button/colors/font_color = Color(0.882353, 0.501961, 0, 1)
+Button/font_sizes/font_size = 20
 Label/colors/font_color = Color(0.885915, 0.505474, 0, 1)
+Label/font_sizes/font_size = 20
+LineEdit/colors/caret_color = Color(0.95, 0.95, 0.95, 1)
+LineEdit/colors/font_color = Color(0.882353, 0.501961, 0, 1)
+LineEdit/colors/font_placeholder_color = Color(0.882353, 0.501961, 0, 0.6)
+LineEdit/font_sizes/font_size = 20
 ProgressBar/colors/font_color = Color(0.886275, 0.505882, 0, 1)
 ProgressBar/styles/background = SubResource("StyleBoxEmpty_mkurb")

@@ -8,7 +8,7 @@
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
 size = Vector2(50, 50)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["Persist"]]
 process_mode = 1
 transform = Transform3D(0.999008, 0, 0, 0, 0.999008, 0, 0, 0, 0.999008, 0, 0, 0)
 input_ray_pickable = false
@@ -149,6 +149,7 @@ metadata/_tab_index = 0
 [node name="Pause Menu" type="VBoxContainer" parent="HUD"]
 unique_name_in_owner = true
 process_mode = 2
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -213,5 +214,153 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Quit To Main Menu"
 
+[node name="save_menu" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="save_menu_vboxcontainer_1" type="VBoxContainer" parent="HUD/save_menu"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSeparator" type="HSeparator" parent="HUD/save_menu/save_menu_vboxcontainer_1"]
+layout_mode = 2
+
+[node name="save_menu_topbar" type="HBoxContainer" parent="HUD/save_menu/save_menu_vboxcontainer_1"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+text = "Save To An Exsisting File"
+
+[node name="new_save_button" type="Button" parent="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("2_ecp58")
+text = "New Save"
+
+[node name="VSeparator2" type="VSeparator" parent="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="HUD/save_menu/save_menu_vboxcontainer_1"]
+layout_mode = 2
+
+[node name="exsisting_saves_menu" type="ItemList" parent="HUD/save_menu/save_menu_vboxcontainer_1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="save_menu_cancel" type="Button" parent="HUD/save_menu/save_menu_vboxcontainer_1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Cancel"
+
+[node name="new_save_file_menu" type="Panel" parent="HUD/save_menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -150.0
+offset_right = 225.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="new_save_file_menu_vbox" type="VBoxContainer" parent="HUD/save_menu/new_save_file_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="new_save_menu_top_label" type="Label" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+text = "New Save File"
+
+[node name="HSeparator" type="HSeparator" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+text = "Save File Name:"
+
+[node name="file_name_box" type="HBoxContainer" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/file_name_box"]
+layout_mode = 2
+
+[node name="new_file_name" type="LineEdit" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/file_name_box"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Input the name of your new save file.
+"
+theme = ExtResource("2_ecp58")
+placeholder_text = "Name"
+caret_blink = true
+
+[node name="HSeparator2" type="HSeparator" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+theme_override_constants/separation = 130
+
+[node name="new_save_con_can" type="HBoxContainer" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can"]
+layout_mode = 2
+theme_override_constants/separation = 300
+
+[node name="new_save_file_confirm" type="Button" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+text = "Save
+"
+
+[node name="new_save_file_cancel" type="Button" parent="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+text = "Cancel"
+
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
 [connection signal="pressed" from="HUD/Pause Menu/button_return_game" to="." method="_on_button_return_game_pressed"]
+[connection signal="pressed" from="HUD/Pause Menu/HSplitContainer/button_save" to="." method="_on_button_save_pressed"]
+[connection signal="pressed" from="HUD/Pause Menu/button_quit_to_menu" to="." method="_on_button_quit_to_menu_pressed"]
+[connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar/new_save_button" to="." method="_on_new_save_button_pressed"]
+[connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_cancel" to="." method="_on_save_menu_cancel_pressed"]
+[connection signal="text_submitted" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/file_name_box/new_file_name" to="." method="_on_new_file_name_text_submitted"]
+[connection signal="pressed" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can/new_save_file_confirm" to="." method="_on_new_save_file_confirm_pressed"]
+[connection signal="pressed" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can/new_save_file_cancel" to="." method="_on_new_save_file_cancel_pressed"]

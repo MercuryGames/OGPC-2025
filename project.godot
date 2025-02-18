@@ -11,13 +11,20 @@ config_version=5
 [application]
 
 config/name="StormRunner"
+config/version="0.2"
 run/main_scene="res://title_level.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/resizable=false
+window/size/initial_position_type=0
+window/size/extend_to_title=true
+
+[global_group]
+
+Persist=""
 
 [input]
 

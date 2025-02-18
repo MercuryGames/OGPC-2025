@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var base_speed = 5.0
 @export var JUMP_VELOCITY = 4.5
 @onready var SPEED = base_speed
+@onready var main_menu = load("res://title_level.tscn")
 
 @onready var interaction_raycast = %raycast3d #Make sure the node reference is set correctly
 @onready var interaction_label = %Label
@@ -40,12 +41,28 @@ var hydration = 100
 @export var starvation_damage: float
 @export var dehydration_damage: float
 
+
+#save related variables
+@onready var save_menu = %save_menu
+@onready var new_save_menu = %new_save_file_menu
+@onready var save_file_list_disp = %exsisting_saves_menu
+@onready var new_save_name = %new_file_name
+var all_saves_list = []
+var save_menu_state = false
+var New_Save_File_Name = ""
+
+
+
 signal item_spawned(id)
+signal return_to_main_menu()
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pause_menu.hide()
 	inventory_ui.hide()
+	save_menu.hide()
+	new_save_menu.hide()
+	
 	
 var holding_object = false
 var object_held
@@ -138,12 +155,13 @@ func _process(delta):
 	if interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
 		interaction_is_reset = false
-		if interactable != null and interactable.id[5] and interactable.id[6]:
-			interaction_label.text = "Q to grab|E to yoink"
-		if interactable != null and interactable.id[5]:
-			interaction_label.text = "Q to grab"
-		if interactable != null and interactable.id[6]:
-			interaction_label.text = "E to yoink"
+		if interactable != null and interactable.has_method("yoink"):
+			if interactable != null and interactable.id[5] and interactable.id[6]:
+				interaction_label.text = "Q to grab|E to yoink"
+			if interactable != null and interactable.id[5]:
+				interaction_label.text = "Q to grab"
+			if interactable != null and interactable.id[6]:
+				interaction_label.text = "E to yoink"
 
 	else:
 		if !interaction_is_reset:
@@ -214,3 +232,92 @@ func _on_items_item_activated(index: int) -> void:
 
 func _on_button_return_game_pressed() -> void:
 	menu_controller(0)
+
+
+func _on_button_quit_to_menu_pressed() -> void:
+	get_tree().change_scene_to_packed(main_menu)
+
+
+func _on_button_save_pressed() -> void:
+	if !DirAccess.dir_exists_absolute("user://savegames/"):
+		print("making dir")
+		DirAccess.open("user://").make_dir("user://savegames/")
+	var save_folder = DirAccess.open("user://savegames/")
+	if save_folder:
+		print("it worked")
+		all_saves_list = save_folder.get_files()
+	print(all_saves_list)
+	save_menu.show()
+	save_menu_state = true
+
+
+func _on_save_menu_cancel_pressed() -> void:
+	save_menu.hide()
+	save_menu_state = false
+
+
+func _on_new_save_button_pressed() -> void:
+	New_Save_File_Name = ""
+	new_save_name.clear()
+	new_save_menu.show()
+
+
+func _on_new_file_name_text_submitted(new_text: String) -> void:
+	if new_text != null:
+		New_Save_File_Name = new_text
+
+func save_game(file_name):
+	var file_sname = str("user://savegames/",file_name,".save")
+	print(file_sname)
+	var save_file = FileAccess.open(file_sname, FileAccess.WRITE)
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	if save_file == null:
+		print("'Something terrible has happened.'")
+		print(FileAccess.get_open_error())
+	for node in save_nodes:
+		if node.scene_file_path.is_empty():
+			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			continue
+		
+		if !node.has_method("save"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			continue
+		
+		var node_data = node.call("save")
+		var json_string = JSON.stringify(node_data)
+		save_file.store_line(json_string)
+
+func load_game(file_name):
+	var file_sname = str("user://savegames",file_name,".save")
+	if not FileAccess.file_exists(file_sname):
+		return # Error! We don't have a save to load.
+	var save_file = FileAccess.open(file_sname, FileAccess.READ)
+	return
+	
+	
+	
+func save():
+	var save_dict = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent_node_3d().get_path(),
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"health" : health,
+		"hunger" : hunger,
+		"hydration" : hydration,
+		"inventory" : inventory
+	}
+	return save_dict
+
+func _on_new_save_file_confirm_pressed() -> void:
+	if New_Save_File_Name != "":
+		save_game(New_Save_File_Name)
+	elif New_Save_File_Name == "":
+		new_save_name.clear()
+		new_save_name.placeholder_text = "Bad File Name"
+
+func _on_new_save_file_cancel_pressed() -> void:
+	new_save_name.clear()
+	New_Save_File_Name = ""
+	new_save_menu.hide()
