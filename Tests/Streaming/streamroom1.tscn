@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dllk425wmsdeh"]
 
-[ext_resource type="Script" path="res://Tests/Streaming/LOD.gd" id="1_cx4jc"]
+[ext_resource type="Script" uid="uid://d0wmm7xgdfnni" path="res://Tests/Streaming/LOD.gd" id="1_cx4jc"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_0hajo"]
 

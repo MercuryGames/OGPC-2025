@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqfg257x73pjd"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_xq87f"]
+[ext_resource type="Script" uid="uid://caqb3nm565y5i" path="res://player.gd" id="1_xq87f"]
 [ext_resource type="Theme" uid="uid://ceb54j815ji87" path="res://UI.tres" id="2_ecp58"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
@@ -149,7 +149,6 @@ metadata/_tab_index = 0
 [node name="Pause Menu" type="VBoxContainer" parent="HUD"]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -355,9 +354,30 @@ layout_mode = 2
 theme = ExtResource("2_ecp58")
 text = "Cancel"
 
+[node name="Load Menu" type="Panel" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="load_menu_vbox" type="VBoxContainer" parent="HUD/Load Menu"]
+visible = false
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 400.0
+
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
 [connection signal="pressed" from="HUD/Pause Menu/button_return_game" to="." method="_on_button_return_game_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/HSplitContainer/button_save" to="." method="_on_button_save_pressed"]
+[connection signal="pressed" from="HUD/Pause Menu/HSplitContainer2/button_load" to="." method="_on_button_load_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/button_quit_to_menu" to="." method="_on_button_quit_to_menu_pressed"]
 [connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar/new_save_button" to="." method="_on_new_save_button_pressed"]
 [connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_cancel" to="." method="_on_save_menu_cancel_pressed"]

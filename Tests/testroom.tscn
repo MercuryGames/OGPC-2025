@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cqtsxbh7elr1x"]
 
-[ext_resource type="Script" path="res://Tests/testroom.gd" id="1_jmgis"]
+[ext_resource type="Script" uid="uid://qeipxiv6e5ju" path="res://Tests/testroom.gd" id="1_jmgis"]
 [ext_resource type="PackedScene" uid="uid://nym7l4jrfnj1" path="res://100.tscn" id="2_hy5c1"]
 [ext_resource type="PackedScene" uid="uid://d4np2eak8haw4" path="res://MovableOBJ.tscn" id="4_ebjad"]
 [ext_resource type="PackedScene" uid="uid://bqfg257x73pjd" path="res://player.tscn" id="4_nycy1"]

@@ -278,7 +278,6 @@ func save_game(file_name):
 		if node.scene_file_path.is_empty():
 			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
 			continue
-		
 		if !node.has_method("save"):
 			print("persistent node '%s' is missing a save() function, skipped" % node.name)
 			continue
@@ -292,9 +291,47 @@ func load_game(file_name):
 	if not FileAccess.file_exists(file_sname):
 		return # Error! We don't have a save to load.
 	var save_file = FileAccess.open(file_sname, FileAccess.READ)
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for i in save_nodes:
+		if i == %player:
+			continue
+		i.queue_free()
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		# Creates the helper class to interact with JSON.
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		
+		if node_data["filename"] == "player.gd":
+			for k in node_data.keys():
+				if k == "filename" or k == "parent":
+					continue
+				position = Vector3(node_data["pos_x"], node_data["pos_y"], node_data["pos_z"])
+				health = node_data["health"]
+				hunger = node_data["hunger"]
+				hydration = node_data["hydration"]
+				inventory = node_data["invetory"]
+			pass
+		else:
+			var new_object = load(node_data["filename"]).instantiate()
+			get_node(node_data["parent"]).add_child(new_object)
+			new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
+
+		# Now we set the remaining variables.
+			for i in node_data.keys():
+				if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+					continue
+				new_object.set(i, node_data[i])
 	return
-	
-	
 	
 func save():
 	var save_dict = {
@@ -316,8 +353,13 @@ func _on_new_save_file_confirm_pressed() -> void:
 	elif New_Save_File_Name == "":
 		new_save_name.clear()
 		new_save_name.placeholder_text = "Bad File Name"
+	
 
 func _on_new_save_file_cancel_pressed() -> void:
 	new_save_name.clear()
 	New_Save_File_Name = ""
 	new_save_menu.hide()
+
+
+func _on_button_load_pressed() -> void:
+	pass # Replace with function body.
