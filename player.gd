@@ -51,6 +51,8 @@ var all_saves_list = []
 var save_menu_state = false
 var New_Save_File_Name = ""
 
+@onready var saves_menu_166 = %existing_saves_loadmenu
+
 
 
 signal item_spawned(id)
@@ -187,7 +189,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("left", "right", "forwards", "backwards")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if Input.is_action_pressed("run"):
 		SPEED = base_speed*run_multiplier
@@ -289,6 +291,7 @@ func save_game(file_name):
 func load_game(file_name):
 	var file_sname = str("user://savegames",file_name,".save")
 	if not FileAccess.file_exists(file_sname):
+		print("****")
 		return # Error! We don't have a save to load.
 	var save_file = FileAccess.open(file_sname, FileAccess.READ)
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
@@ -362,4 +365,24 @@ func _on_new_save_file_cancel_pressed() -> void:
 
 
 func _on_button_load_pressed() -> void:
-	pass # Replace with function body.
+	if !DirAccess.dir_exists_absolute("user://savegames/"):
+		print("making dir")
+		DirAccess.open("user://").make_dir("user://savegames/")
+	var save_folder = DirAccess.open("user://savegames/")
+	if save_folder:
+		print("it worked")
+		all_saves_list = save_folder.get_files()
+	print(all_saves_list)
+	%"Load Menu".show()
+	for i in all_saves_list:
+		if i not in saves_menu_166.get_groups():
+			saves_menu_166.add_item(String(i))
+	
+	
+func _on_load_menu_exit_pressed() -> void:
+	%"Load Menu".hide()
+
+
+func _on_existing_saves_loadmenu_item_activated(index: int) -> void:
+	print(index)
+	load_game(saves_menu_166.get_index(index))

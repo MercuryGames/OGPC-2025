@@ -17,6 +17,7 @@ script = ExtResource("1_8jggc")
 
 [node name="menu_container" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,8 +101,6 @@ size_flags_horizontal = 4
 text = "New Game"
 
 [node name="settings_menu" type="VBoxContainer" parent="."]
-unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,7 +125,6 @@ text = "Settings"
 
 [node name="TabContainer" type="TabContainer" parent="settings_menu"]
 layout_mode = 2
-size_flags_vertical = 3
 current_tab = 0
 
 [node name="General" type="VBoxContainer" parent="settings_menu/TabContainer"]
@@ -185,9 +183,6 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator3" type="HSeparator" parent="settings_menu/TabContainer/General/video_settings"]
-layout_mode = 2
-
 [node name="Audio" type="VBoxContainer" parent="settings_menu/TabContainer"]
 visible = false
 layout_mode = 2
@@ -198,91 +193,6 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer"]
-layout_mode = 2
-text = "Movement"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
-layout_mode = 2
-text = "Forwards:"
-
-[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
-layout_mode = 2
-
-[node name="forwards_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
-layout_mode = 2
-text = "Backwards:"
-
-[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
-layout_mode = 2
-
-[node name="backwards_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
-layout_mode = 2
-text = "Left:"
-
-[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
-layout_mode = 2
-
-[node name="left_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
-layout_mode = 2
-text = "Right:"
-
-[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
-layout_mode = 2
-
-[node name="right_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="settings_menu"]
-layout_mode = 2
-
-[node name="VSeparator" type="VSeparator" parent="settings_menu/HBoxContainer2"]
-layout_mode = 2
-
-[node name="exit_setting_buttons" type="Button" parent="settings_menu/HBoxContainer2"]
-layout_mode = 2
-text = "Exit Settings"
-
-[node name="VSeparator2" type="VSeparator" parent="settings_menu/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="save_setting_button" type="Button" parent="settings_menu/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Save Settings"
-
-[node name="VSeparator3" type="VSeparator" parent="settings_menu/HBoxContainer2"]
-layout_mode = 2
-
 [connection signal="pressed" from="menu_container/buttons_container/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="menu_container/buttons_container/load_button" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="menu_container/buttons_container/settings_button" to="." method="_on_settings_button_pressed"]
@@ -290,9 +200,3 @@ layout_mode = 2
 [connection signal="pressed" from="new_game_menu/new_game_start" to="." method="_on_new_game_start_pressed"]
 [connection signal="toggled" from="settings_menu/TabContainer/General/video_settings/Fullscreen/fullscreen_button" to="." method="_on_fullscreen_button_toggled"]
 [connection signal="item_selected" from="settings_menu/TabContainer/General/video_settings/Resolution/Resolution_button" to="." method="_on_resolution_button_item_selected"]
-[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer2/forwards_keybind_button" to="." method="_on_forwards_keybind_button_pressed"]
-[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer3/backwards_keybind_button" to="." method="_on_backwards_keybind_button_pressed"]
-[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer4/left_keybind_button" to="." method="_on_left_keybind_button_pressed"]
-[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer5/right_keybind_button" to="." method="_on_right_keybind_button_pressed"]
-[connection signal="pressed" from="settings_menu/HBoxContainer2/exit_setting_buttons" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="settings_menu/HBoxContainer2/save_setting_button" to="." method="_on_save_setting_button_pressed"]
