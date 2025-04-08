@@ -18,9 +18,9 @@ func _process(delta: float) -> void:
 
 func _on_player_item_spawned(id: Variant) -> void:
 	print(id)
-	var spawnx = player.get_global_position().x + 1 
-	var spawny = player.get_global_position().y + 1
-	var spawnz = player.get_global_position().z + 1
+	var spawnx = player.grabpoint.get_global_position().x
+	var spawny = player.grabpoint.get_global_position().y
+	var spawnz = player.grabpoint.get_global_position().z
 	print(spawnx,spawny,spawnz)
 	if id[0] == 100:
 		print(id)
