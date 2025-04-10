@@ -1,6 +1,6 @@
 extends Node3D
 @export var ball: PackedScene
-var citytiles: = [load("res://cityblocks/CITYBLOCK1.tscn")]
+var citytiles: = [load("res://CITYBLOCK1.tscn")]
 var cityarray = [
 	[0, 0, 0],
 	[0, 0, 0],
