@@ -160,9 +160,9 @@ func _process(delta):
 		if interactable != null and interactable.has_method("yoink"):
 			if interactable != null and interactable.id[5] and interactable.id[6]:
 				interaction_label.text = "Q to grab|E to yoink"
-			if interactable != null and interactable.id[5]:
+			elif interactable != null and interactable.id[5]:
 				interaction_label.text = "Q to grab"
-			if interactable != null and interactable.id[6]:
+			elif interactable != null and interactable.id[6]:
 				interaction_label.text = "E to yoink"
 
 	else:

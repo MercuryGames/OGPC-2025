@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@onready var player = get_parent().get_node("%Player")
+@onready var player = get_tree().get_root().get_node("/root/TestRoom/Player")
 
 var is_grabbed = false
 var posDiffpast = Vector3(0,0,0)
