@@ -32,6 +32,7 @@ albedo_texture = ExtResource("2_cvna1")
 [sub_resource type="BoxShape3D" id="BoxShape3D_ih0g5"]
 
 [node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0304565, 0.204109, 0.294907)
 script = ExtResource("1_4vq5e")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]

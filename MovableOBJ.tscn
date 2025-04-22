@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4np2eak8haw4"]
+[gd_scene load_steps=13 format=3 uid="uid://d4np2eak8haw4"]
 
 [ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_k3nn3"]
+[ext_resource type="Texture2D" uid="uid://myr42mmyscw" path="res://blue.png" id="2_bygum"]
+[ext_resource type="Texture2D" uid="uid://dunaxypidn5re" path="res://green.png" id="3_sys5v"]
+[ext_resource type="Texture2D" uid="uid://cjfclmtrsjniw" path="res://red.png" id="4_ftrcr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ku6tt"]
 friction = 0.3
@@ -8,12 +11,21 @@ bounce = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twxeo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdr0y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8tvb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_wcmmb"]
-material = SubResource("StandardMaterial3D_qdr0y")
+material = SubResource("StandardMaterial3D_r8tvb")
 
 [sub_resource type="Skin" id="Skin_1uhl6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2w8b"]
+albedo_texture = ExtResource("2_bygum")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_td7vb"]
+albedo_texture = ExtResource("3_sys5v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nc2jf"]
+albedo_texture = ExtResource("4_ftrcr")
 
 [node name="RigidBody3D" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_ku6tt")
@@ -25,6 +37,24 @@ obj_id = 1
 shape = SubResource("BoxShape3D_twxeo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wcmmb")
+skin = SubResource("Skin_1uhl6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_w2w8b")
+mesh = SubResource("BoxMesh_wcmmb")
+skin = SubResource("Skin_1uhl6")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 5, 0, 0, 0, 0.1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_td7vb")
+mesh = SubResource("BoxMesh_wcmmb")
+skin = SubResource("Skin_1uhl6")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_nc2jf")
 mesh = SubResource("BoxMesh_wcmmb")
 skin = SubResource("Skin_1uhl6")
 

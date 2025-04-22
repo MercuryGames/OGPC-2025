@@ -1,5 +1,9 @@
 extends CharacterBody3D
 @onready var MainCamera = get_node("Camera3D")
+@onready var MapCamera = get_node("Camera3D2")
+@onready var PlayerMarker = get_node("playermarker")
+@onready var ObjMark1 = get_parent().get_node("objectiveMarker1")
+@onready var MapMarkers = [PlayerMarker, ObjMark1]
 
 @export_category("Movement")
 @export var run_multiplier: float
@@ -16,6 +20,7 @@ var interaction_is_reset : bool = true
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
 var MouseSensitivity = 0.001
+var mapmode = false
 
 var inventoryState = false #whether the inventory menu is open or closed
 var inventory = [] #the inventory array
@@ -101,6 +106,25 @@ func _input(event):
 		
 	if event.is_action_pressed("ui_inventory"):
 		menu_controller(1)
+	if event.is_action_pressed("map"):
+		if mapmode == false:
+			MapCamera.make_current()
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			mapmode = true
+		elif mapmode == true:
+			MainCamera.make_current()
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			mapmode = false
+	if event.is_action_pressed("zoom_in") and mapmode == true:
+		if (MapCamera.position.y - MapCamera.position.y/10) >= 20:
+			MapCamera.position.y -= MapCamera.position.y/10
+		else:
+			MapCamera.position.y = 20
+	if event.is_action_pressed("zoom_out") and mapmode == true:
+		if (MapCamera.position.y + MapCamera.position.y/10) <= 500:
+			MapCamera.position.y += MapCamera.position.y/10
+		else:
+			MapCamera.position.y = 500
 
 func menu_controller(type):
 	if type == 0:
@@ -201,8 +225,18 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
+	if mapmode == false:
+		move_and_slide()
+		for g in MapMarkers.size():
+			MapMarkers[g].hide()
+	else:
+		for g in MapMarkers.size():
+			MapMarkers[g].show()
+	MapCamera.set_rotation(Vector3(-rotation.x-deg_to_rad(90), -rotation.y, -rotation.z))
+	for g in MapMarkers.size():
+		MapMarkers[g].scale.x = MapCamera.position.y/100
+		#MapMarkers[g].scale.y = MapCamera.position.y/100
+		MapMarkers[g].scale.z = MapCamera.position.y/100
 
 func use_item(index: int):
 	print(inventory[index])
