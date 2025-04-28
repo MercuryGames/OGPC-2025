@@ -64,6 +64,10 @@ signal item_spawned(id)
 signal return_to_main_menu()
 
 func _ready():
+	self.set_collision_layer_value(1, false)
+	self.set_collision_layer_value(2, true)
+	self.set_collision_mask_value(1, false)
+	self.set_collision_mask_value(2, true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pause_menu.hide()
 	inventory_ui.hide()
@@ -182,6 +186,9 @@ func _process(delta):
 		var interactable = interaction_raycast.get_collider()
 		interaction_is_reset = false
 		if interactable != null and interactable.has_method("yoink"):
+			if holding_object == false:
+				for m in interactable.meshes.size():
+					interactable.meshes[m].showme()
 			if interactable != null and interactable.id[5] and interactable.id[6]:
 				interaction_label.text = "Q to grab|E to yoink"
 			elif interactable != null and interactable.id[5]:

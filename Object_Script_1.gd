@@ -1,6 +1,8 @@
 extends RigidBody3D
 
 @onready var player = get_tree().get_root().get_node("/root/TestRoom/Player")
+@onready var meshes = find_children("MeshInstance3D")
+@onready var outlineMat = load("res://outlineMaker.gd")
 
 var is_grabbed = false
 var posDiffpast = Vector3(0,0,0)
@@ -16,6 +18,7 @@ var u = 0
 @export var can_grab: bool
 @export var can_pickup: bool
 var heldrotation = Vector3(0, 0, 0)
+var test = preload("res://outlinetesting.tres")
 # Contains the following default values:
 
 
@@ -24,11 +27,18 @@ var id2 = 0 #for spawning
 var spawned = false #for spawning
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.set_collision_layer_value(1, true)
+	self.set_collision_layer_value(2, true)
+	self.set_collision_mask_value(1, true)
+	self.set_collision_mask_value(2, true)
 	if spawned:
 		id = id2
 	print(id[4], id)
 	print(player)
-
+	for m in meshes.size():
+		print(m)
+		meshes[m].set_script(outlineMat)
+		meshes[m]._ready()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -37,6 +47,10 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float):
 	# Process for making object move to pointer
 	if is_grabbed == true:
+		for m in meshes.size():
+			meshes[m].hideme()
+		self.set_collision_layer_value(2, false)
+		self.set_collision_mask_value(2, false)
 		lock_rotation = true
 		gravity_scale = 0
 		if u == 0:
@@ -67,15 +81,21 @@ func _physics_process(delta: float):
 		#print("total",total_force)
 		posDiffpast = posDiff
 		#rotation.x = heldrotation.x
-		print(basis)
+		print(cos(player.CameraRotation.x))
 		rotate_x(heldrotation.x*cos(player.CameraRotation.x))
 		rotate_z(heldrotation.x*sin(player.CameraRotation.x))
+		rotate_z(heldrotation.z*cos(player.CameraRotation.x))
+		rotate_x(heldrotation.z*-sin(player.CameraRotation.x))
 		rotate_y(heldrotation.y-(player.CameraRotation.x-t))
 		transform = transform.orthonormalized()
 		heldrotation = Vector3(0, 0, 0)
 		apply_central_force(total_force)
 		t = player.CameraRotation.x
 	elif is_grabbed == false:
+		for m in meshes.size():
+			meshes[m].hideme()
+		self.set_collision_layer_value(2, true)
+		self.set_collision_mask_value(2, true)
 		heldrotation = Vector3(0, 0, 0)
 		gravity_scale = 1
 		u = 0
@@ -89,18 +109,16 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 func _input(event):
 	if event.is_action("left_arrow"):
 		heldrotation.y -= deg_to_rad(r)
-		print("1")
 	if event.is_action("right_arrow"):
 		heldrotation.y += deg_to_rad(r)
-		print("2")
 	if event.is_action("up_arrow"):
-		var k = heldrotation.y
-		#if  cos(k) >= sin(k):
 		heldrotation.x -= deg_to_rad(r)
-		print("3")
 	if event.is_action("down_arrow"):
 		heldrotation.x += deg_to_rad(r)
-		print("4")
+	if event.is_action("toprotateleft"):
+		heldrotation.z += deg_to_rad(r)
+	if event.is_action("toprotateright"):
+		heldrotation.z -= deg_to_rad(r)
 
 func initialize(x,y,z,id1,Player1):
 	var cords = Vector3(x,y,z)
@@ -117,7 +135,6 @@ func yoink(event):
 func grab(event):
 	if is_grabbed == false:
 		is_grabbed = true
-		
 	else:
 		is_grabbed = false
 	print(19191)
@@ -126,3 +143,8 @@ func define_things():
 	#player = %Player
 	#print(player)
 	pass
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	body.freeze = true
+	body.is_grabbed = false

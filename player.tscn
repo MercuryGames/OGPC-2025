@@ -10,7 +10,7 @@ radius = 0.25
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
 size = Vector2(50, 50)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqtel"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3pqv"]
 albedo_texture = ExtResource("3_i3pqv")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_i3pqv"]
@@ -19,6 +19,8 @@ size = Vector2(10, 10)
 [node name="Player" type="CharacterBody3D" groups=["Persist"]]
 process_mode = 1
 transform = Transform3D(0.999008, 0, 0, 0, 0.999008, 0, 0, 0, 0.999008, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
 input_ray_pickable = false
 script = ExtResource("1_xq87f")
 run_multiplier = 1.3
@@ -36,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_qc8b6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1.00099, 0, 0, 0, 1.00099, 0, 0, 0, 1.00099, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="raycast3d" type="RayCast3D" parent="Camera3D"]
 unique_name_in_owner = true
@@ -449,7 +451,8 @@ transform = Transform3D(1.001, 0, 0, 0, -4.37551e-08, 1, 0, -1.001, -4.37114e-08
 
 [node name="playermarker" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.01901, 0, 0, 0, 1.01901, 0, 0, 0, 1.01901, 0, 1, 0)
-material_override = SubResource("StandardMaterial3D_hqtel")
+visible = false
+material_override = SubResource("StandardMaterial3D_i3pqv")
 mesh = SubResource("PlaneMesh_i3pqv")
 
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
