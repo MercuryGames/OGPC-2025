@@ -1,6 +1,6 @@
 extends Node3D
 @export var ball: PackedScene
-var citytiles: = [load("res://CITYBLOCK1.tscn")]
+var citytiles: = [load("res://cityblock/CITYBLOCK1.tscn")]
 var cityarray = [
 	[0, 0, 0],
 	[0, 0, 0],
@@ -11,11 +11,12 @@ var cityarray = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for g in cityarray.size():
-		for h in cityarray[g].size():
-			var block = citytiles[cityarray[g][h]].instantiate()
-			block.initialize(36*g, 0, 36*h, player)
-			add_child(block)
+	pass
+#	for g in cityarray.size():
+#		for h in cityarray[g].size():
+#			var block = citytiles[cityarray[g][h]].instantiate()
+			#block.initialize(36*g, 0, 36*h, player)
+			#add_child(block)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

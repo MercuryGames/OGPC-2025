@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bhe38phn6hsau"
+path="res://.godot/imported/RD_Lamp.obj-d74f40f2a855ba4de603b3316f5832af.mesh"
+
+[deps]
+
+files=["res://.godot/imported/RD_Lamp.obj-d74f40f2a855ba4de603b3316f5832af.mesh"]
+
+source_file="res://Props/Roads/RD_Lamp.obj"
+dest_files=["res://.godot/imported/RD_Lamp.obj-d74f40f2a855ba4de603b3316f5832af.mesh", "res://.godot/imported/RD_Lamp.obj-d74f40f2a855ba4de603b3316f5832af.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

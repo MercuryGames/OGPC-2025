@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bl6i0b3khjeso"
+path="res://.godot/imported/Mailbox.obj-74d50ae057ce23823d5428a099fcaec5.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Mailbox.obj-74d50ae057ce23823d5428a099fcaec5.mesh"]
+
+source_file="res://Props/Mailbox.obj"
+dest_files=["res://.godot/imported/Mailbox.obj-74d50ae057ce23823d5428a099fcaec5.mesh", "res://.godot/imported/Mailbox.obj-74d50ae057ce23823d5428a099fcaec5.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

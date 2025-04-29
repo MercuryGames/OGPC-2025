@@ -18,7 +18,6 @@ var u = 0
 @export var can_grab: bool
 @export var can_pickup: bool
 var heldrotation = Vector3(0, 0, 0)
-var test = preload("res://outlinetesting.tres")
 # Contains the following default values:
 
 

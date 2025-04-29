@@ -1,5 +1,5 @@
 extends MeshInstance3D 
-var test = preload("res://outlinetesting.tres")
+var test = load("res://outlinetesting.tres")
 var mesh_outline = mesh.create_outline(0.05)
 var outlineMesh = MeshInstance3D.new()
 func _ready():
