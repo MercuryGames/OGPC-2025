@@ -1,24 +1,289 @@
-[gd_scene load_steps=3 format=3 uid="uid://cafy08opkal21"]
+[gd_scene load_steps=7 format=3 uid="uid://cafy08opkal21"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_67hur"]
-plane = Plane(10, 1, 0, 0)
+[ext_resource type="Script" uid="uid://dcaaa0jwudj22" path="res://TitleAnim.gd" id="1_ded0s"]
+
+[sub_resource type="Animation" id="Animation_ded0s"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1.9979, 1.13665, -16.6999)
+
+[sub_resource type="Animation" id="Animation_26xrp"]
+resource_name = "Startup"
+length = 10.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1.9979, 1.13665, -16.6999, 1, 1, 2.84259, 1.13665, -16.6999, 3, 1, 2.84259, 1.13665, -12.4669, 4.96667, 1, 2.84259, 8.24522, -12.4669, 6, 1, 8.38183, 8.24522, -12.4669, 8, 1, 8.38183, 1.84644, 2.91072, 10, 1, 19.0718, 11.8453, 2.91072)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0.707107, 0, 0.707107, 1.26667, 1, 0, 0.841629, 0, 0.540057, 4.96667, 1, 0, 0.945717, 0, 0.32499, 6.56667, 1, -9.6775e-09, 0.975184, 0.221395, -4.26266e-08, 7.66667, 1, -9.6775e-09, 0.975184, 0.221395, -4.26266e-08, 9, 1, 0, 0.707107, 0, 0.707107, 10, 1, -0.144021, 0.692285, 0.144021, 0.692285)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jha80"]
+_data = {
+&"RESET": SubResource("Animation_ded0s"),
+&"Startup": SubResource("Animation_26xrp")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_gu8sn"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2pyhh"]
 size = Vector2(100, 100)
 
 [node name="Title_Level1" type="Node3D"]
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("WorldBoundaryShape3D_67hur")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179024, 0.0277424, -0.0636864)
-mesh = SubResource("PlaneMesh_2pyhh")
-
-[node name="Camera3D2" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 10, 25)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-8.7481e-09, -0.398814, 0.917032, 1.93715e-07, 0.917032, 0.398814, -1, 1.81132e-07, 6.9234e-08, 1.9979, 1.13665, -16.6999)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+light_bake_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jha80")
+}
+script = ExtResource("1_ded0s")
+
+[node name="Skyscrapers" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, 0)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, 5.56739)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.452, 11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.452, 16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.452, 22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, 0)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, 5.56739)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.452, 11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.452, 16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.452, 22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, 0)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, 5.56739)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.452, 11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.452, 16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.452, 22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, 0)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, 5.56739)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.452, 11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.452, 16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.452, 22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, 0)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, -5.567)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, -5.567)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D28" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, -5.567)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D29" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, -5.567)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D30" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, -5.567)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D31" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, -11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D32" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, -11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D33" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, -11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D34" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, -11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D35" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, -11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D36" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, -16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D37" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, -16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D38" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, -16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D39" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, -16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D40" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, -16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D41" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 0, 3.45195, -22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D42" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -5.567, 3.45195, -22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D43" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, -11.134, 3.45195, -22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D44" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 5.567, 3.45195, -22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D45" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, -22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.45195, 5.56739)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.452, 11.134)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.452, 16.701)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="Skyscrapers"]
+transform = Transform3D(2.48711, 0, 0, 0, 7.24586, 0, 0, 0, 2.18808, 11.134, 3.452, 22.268)
+mesh = SubResource("BoxMesh_gu8sn")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179024, 0.0277424, -0.0636864)
+mesh = SubResource("PlaneMesh_2pyhh")
+skeleton = NodePath("")
