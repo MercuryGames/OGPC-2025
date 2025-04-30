@@ -1,6 +1,6 @@
 extends CharacterBody3D
-@onready var MainCamera = get_node("Camera3D")
-@onready var MapCamera = get_node("Camera3D2")
+@onready var MainCamera = %PCam
+@onready var MapCamera = %MCam
 @onready var PlayerMarker = get_node("playermarker")
 @onready var ObjMark1 = get_parent().get_node("objectiveMarker1")
 @onready var MapMarkers = [PlayerMarker, ObjMark1]

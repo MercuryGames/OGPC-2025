@@ -12,15 +12,15 @@ var cityarray = [
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-#	for g in cityarray.size():
-#		for h in cityarray[g].size():
-#			var block = citytiles[cityarray[g][h]].instantiate()
-			#block.initialize(36*g, 0, 36*h, player)
-			#add_child(block)
+	for g in cityarray.size():
+		for h in cityarray[g].size():
+			var block = citytiles[cityarray[g][h]].instantiate()
+			block.initialize(36*g, 0, 36*h, player)
+			add_child(block)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 

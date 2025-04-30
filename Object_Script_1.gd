@@ -40,7 +40,7 @@ func _ready() -> void:
 		meshes[m]._ready()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _physics_process(delta: float):
@@ -103,7 +103,7 @@ func _physics_process(delta: float):
 	
 func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event.is_action_pressed("ui_interact"):
-		print(10901010)
+		print('interact')
 
 func _input(event):
 	if event.is_action("left_arrow"):
@@ -127,16 +127,14 @@ func initialize(x,y,z,id1,Player1):
 	print("init",id2,spawned)
 	player = Player1
 
-func yoink(event):
+func yoink(_event):
 	queue_free()
-	print(19191)
 	
-func grab(event):
+func grab(_event):
 	if is_grabbed == false:
 		is_grabbed = true
 	else:
 		is_grabbed = false
-	print(19191)
 	
 func define_things():
 	#player = %Player
