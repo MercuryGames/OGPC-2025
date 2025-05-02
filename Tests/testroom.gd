@@ -1,44 +1,41 @@
 extends Node3D
 @export var ball: PackedScene
+var citytiles: = [load("res://cityblock/CITYBLOCK1.tscn")]
+var cityarray = [
+	[0, 0, 0],
+	[0, 0, 0],
+	[0, 0, 0]
+]
 
 @onready var player = %Player
 
-var wind_force = 1
-var wind_direction = deg_to_rad(25)
-var wind_vector = Vector3(sin(wind_direction)*wind_force,0,cos(wind_direction)*wind_force)
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#for i in get_children():
-	#	if i.has_method("define_things"):
-	#		i.define_things()
 	pass
-
+	for g in cityarray.size():
+		for h in cityarray[g].size():
+			var block = citytiles[cityarray[g][h]].instantiate()
+			block.initialize(36*g, 0, 36*h, player)
+			add_child(block)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	#for i in get_children():
-		#if i.is_class("RigidBody3D"):
-		#	i.apply_force(wind_vector)
+func _process(_delta: float) -> void:
 	pass
-	
+
+
 func _on_player_item_spawned(id: Variant) -> void:
 	print(id)
-	var spawnx = player.get_global_position().x + 1 
-	var spawny = player.get_global_position().y + 1
-	var spawnz = player.get_global_position().z + 1
+	var spawnx = player.grabpoint.get_global_position().x
+	var spawny = player.grabpoint.get_global_position().y
+	var spawnz = player.grabpoint.get_global_position().z
 	print(spawnx,spawny,spawnz)
-	
-	var node_path = id[8]
-	
-	if id[0]:
+	if id[0] == 100:
 		print(id)
-		var node = load(node_path).instantiate()
+		var balll = ball.instantiate()
 		
-		node.initialize(spawnx,spawny,spawnz,id,%Player)
+		balll.initialize(spawnx,spawny,spawnz,id,%Player)
 		
-		add_child(node)
+		add_child(balll)
 		
-		node.define_things()
+		balll.define_things()

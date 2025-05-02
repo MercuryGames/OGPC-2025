@@ -9,7 +9,6 @@ extends Control
 @onready var backwards_keybind = %backwards_keybind_button
 @onready var left_keybind = %left_keybind_button
 @onready var right_keybind = %right_keybind_button
-@onready var map_selector = %map_selector_button
 
 signal start_new_game(map)
 signal quit_game()
@@ -17,9 +16,6 @@ signal quit_game()
 var resolutions = [["1280x720",Vector2(1280,720)], ["1920x1080",Vector2(1920,1080)],["12x12", Vector2(12,12)]]
 var setting_keybind = [false,""]
 @onready var save_settings_button = %save_setting_button
-#@onready var map_list = %Game_holder.maps
-var map_names = ["Testing Room", "Milando"]
-var map_to_load = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,8 +49,6 @@ func _ready() -> void:
 					InputMap.action_add_event(i, type_convert(node_data[i][0], TYPE_OBJECT))
 	else:
 		print("nope")
-	for i in range(0,1):	
-		map_selector.add_item(map_names[i],i)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
@@ -104,7 +98,7 @@ func _on_quit_button_pressed() -> void:
 
 
 func _on_new_game_start_pressed() -> void:
-	start_new_game.emit(map_to_load)
+	start_new_game.emit(0)
 	
 func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	print(toggled_on)
@@ -175,7 +169,3 @@ func _on_save_setting_button_pressed() -> void:
 	else:
 		print("didnt")
 	save_settings_button.set_text("Save Settings")
-
-
-func _on_map_selector_button_item_selected(index: int) -> void:
-	map_to_load = index

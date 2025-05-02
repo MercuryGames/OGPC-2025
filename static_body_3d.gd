@@ -1,2 +1,9 @@
 extends StaticBody3D
-var id = [0, 0, 0, 0, "", false, false, false, 0]
+
+@onready var id = [0, 0, 0, 0, "unusable", false, false]
+
+func ready():
+	self.set_collision_layer_value(1, true)
+	self.set_collision_layer_value(2, true)
+	self.set_collision_mask_value(1, true)
+	self.set_collision_mask_value(2, true)

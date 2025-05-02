@@ -1,5 +1,9 @@
 extends CharacterBody3D
-@onready var MainCamera = get_node("Camera3D")
+@onready var MainCamera = %PCam
+@onready var MapCamera = %MCam
+@onready var PlayerMarker = get_node("playermarker")
+@onready var ObjMark1 = get_parent().get_node("objectiveMarker1")
+@onready var MapMarkers = [PlayerMarker, ObjMark1]
 
 @export_category("Movement")
 @export var run_multiplier: float
@@ -16,6 +20,7 @@ var interaction_is_reset : bool = true
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var CameraRotation = Vector2(0,0)
 var MouseSensitivity = 0.001
+var mapmode = false
 
 var inventoryState = false #whether the inventory menu is open or closed
 var inventory = [] #the inventory array
@@ -53,24 +58,16 @@ var New_Save_File_Name = ""
 
 @onready var saves_menu_166 = %existing_saves_loadmenu
 
-@onready var Inventory2 = %Inventory2
-@onready var tutorial_car_menu = %"Tutorial Car Menu"
-var inventory2_list = []
-var tutorial_car_menu_state = false
-var turorial_car_parts = []
-var turotial_car_needed_parts = []
-var tire_indicator1_showing = false
 
-var message_displayed = false
-var message_time = 10
-var message_dislayed_time = 0
-
-@onready var id = [2000, 0, 0, 0, "Agent Orange", false, false, false]
 
 signal item_spawned(id)
 signal return_to_main_menu()
 
 func _ready():
+	self.set_collision_layer_value(1, false)
+	self.set_collision_layer_value(2, true)
+	self.set_collision_mask_value(1, false)
+	self.set_collision_mask_value(2, true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pause_menu.hide()
 	inventory_ui.hide()
@@ -88,7 +85,7 @@ func _input(event):
 		var MouseEvent = event.relative * MouseSensitivity
 		CameraLook(MouseEvent)
 	if event.is_action_pressed("ui_interact") and holding_object == false: #Adjust to match your InputMap
-		if interaction_raycast.is_colliding() and tutorial_car_menu_state == false:
+		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
 			print(interactable.id)
 			if interactable.id[6] == true:
@@ -96,23 +93,8 @@ func _input(event):
 				#inventoryItemNumber += 1
 				inventory.append(interactable.id)
 				inventoryList.add_item(str(interactable.id[0],",",interactable.id[4]), null, true)
-				if interactable.id[0] >= 5000 and interactable.id[0] < 6000:
-					Inventory2.add_item(str(interactable.id[4]), null, true)
-					inventory2_list.append(interactable.id[4])
 				interactable.yoink(self)
 				interactable.hide()
-			elif interactable.id[7]:
-				print(interactable.id)
-				if interactable.id[0] == 7005:
-					tutorial_car_menu_state = true
-					turorial_car_parts = interactable.parts_inplace
-					turotial_car_needed_parts = interactable.parts_needed
-					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-					tutorial_car_menu.show()
-		elif tutorial_car_menu_state == true:
-			tutorial_car_menu.hide()
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			tutorial_car_menu_state = false
 	elif event.is_action_pressed("ui_grab") and holding_object == false:
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
@@ -128,6 +110,25 @@ func _input(event):
 		
 	if event.is_action_pressed("ui_inventory"):
 		menu_controller(1)
+	if event.is_action_pressed("map"):
+		if mapmode == false:
+			MapCamera.make_current()
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			mapmode = true
+		elif mapmode == true:
+			MainCamera.make_current()
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			mapmode = false
+	if event.is_action_pressed("zoom_in") and mapmode == true:
+		if (MapCamera.position.y - MapCamera.position.y/10) >= 20:
+			MapCamera.position.y -= MapCamera.position.y/10
+		else:
+			MapCamera.position.y = 20
+	if event.is_action_pressed("zoom_out") and mapmode == true:
+		if (MapCamera.position.y + MapCamera.position.y/10) <= 500:
+			MapCamera.position.y += MapCamera.position.y/10
+		else:
+			MapCamera.position.y = 500
 
 func menu_controller(type):
 	if type == 0:
@@ -185,17 +186,15 @@ func _process(delta):
 		var interactable = interaction_raycast.get_collider()
 		interaction_is_reset = false
 		if interactable != null and interactable.has_method("yoink"):
+			if holding_object == false:
+				for m in interactable.meshes.size():
+					interactable.meshes[m].showme()
 			if interactable != null and interactable.id[5] and interactable.id[6]:
 				interaction_label.text = "Q to grab|E to yoink"
 			elif interactable != null and interactable.id[5]:
 				interaction_label.text = "Q to grab"
 			elif interactable != null and interactable.id[6]:
 				interaction_label.text = "E to yoink"
-			elif interactable != null and interactable.id[7]:
-				interaction_label.text = "E to interact"
-		elif interactable != null and interactable.has_method("interact"):
-			if interactable != null and interactable.id[7]:
-				interaction_label.text = "E to interact"
 
 	else:
 		if !interaction_is_reset:
@@ -206,27 +205,7 @@ func _process(delta):
 	food_bar.value = hunger
 	hydration_bar.value = hydration
 	
-	if message_displayed:
-		message_dislayed_time += delta
-		print(message_dislayed_time)
-	if message_dislayed_time >= message_time:
-		%zone_entered.set_text("")
-		message_dislayed_time = 0
-		message_displayed = false
-	
-	if health <= 0:
-		death()
-	
-	#for i in turorial_car_parts:
-	#	if i == turotial_car_needed_parts[0]:
-	#		%BatteryIndicator1.show()
-	#	elif i == turotial_car_needed_parts[1] and !tire_indicator1_showing:
-	#		%TireIndicator1.show()
-	#		tire_indicator1_showing = true
-	#	elif i == turotial_car_needed_parts[2]:
-	#		%TireIndicator2.show()
-	#	elif i == turotial_car_needed_parts[3]:
-	#		%GearIndicator1.show()
+
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -253,17 +232,25 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
+	if mapmode == false:
+		move_and_slide()
+		for g in MapMarkers.size():
+			MapMarkers[g].hide()
+	else:
+		for g in MapMarkers.size():
+			MapMarkers[g].show()
+	MapCamera.set_rotation(Vector3(-rotation.x-deg_to_rad(90), -rotation.y, -rotation.z))
+	for g in MapMarkers.size():
+		MapMarkers[g].scale.x = MapCamera.position.y/100
+		#MapMarkers[g].scale.y = MapCamera.position.y/100
+		MapMarkers[g].scale.z = MapCamera.position.y/100
 
 func use_item(index: int):
 	print(inventory[index])
-	if inventory[index][0] >= 5000 and inventory[index][0] < 6000:
-		pass
-	elif inventory[index][1] == 0:
+	if inventory[index][1] == 0:
 		item_spawned.emit(inventory[index])
 		inventoryList.remove_item(index)
-		inventory.remove_at(index)
+		inventory.pop(index)
 	elif inventory[index][1] == 1:
 		if inventory[index][2] == 0:
 			item_spawned.emit(inventory[index])
@@ -440,37 +427,3 @@ func _on_load_menu_exit_pressed() -> void:
 func _on_existing_saves_loadmenu_item_activated(index: int) -> void:
 	print(index)
 	load_game(saves_menu_166.get_index(index))
-	
-func death():
-	pass
-
-
-func _on_milando_message_zone_entered(text) -> void:
-	%zone_entered.set_text(text)
-	message_displayed = true
-	
-#func inventory2_sync():
-#	var index = 0
-#	for i in inventory:
-#		if i >= 5000 and i < 6000:
-#			Inventory2.append(inventoryList[index])
-
-
-func _on_inventory_2_item_activated(index: int) -> void:
-	if index not in turorial_car_parts:
-		turorial_car_parts.append(inventory2_list[index])
-		Inventory2.remove_item(index)
-		inventoryList.remove_item(index)
-		inventory2_list.remove_at(index)
-		inventory.remove_at(index)
-		print(turorial_car_parts)
-		print(index)
-		for i in turorial_car_parts:
-			if i == turotial_car_needed_parts[0]:
-				%BatteryIndicator1.show()
-			elif i == turotial_car_needed_parts[1]:
-				%TireIndicator1.show()
-			elif i == turotial_car_needed_parts[2]:
-				%TireIndicator2.show()
-			elif i == turotial_car_needed_parts[3]:
-				%GearIndicator1.show()
