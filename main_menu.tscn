@@ -1,7 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://whscmncrw1q6"]
+[gd_scene load_steps=9 format=3 uid="uid://whscmncrw1q6"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_8jggc"]
+[ext_resource type="Script" uid="uid://5rwtbyibhk83" path="res://main_menu.gd" id="1_8jggc"]
 [ext_resource type="Theme" uid="uid://kei32hqvvavi" path="res://TitleTheme.tres" id="1_nqeav"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vrkn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fu7sn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jix8l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_glbon"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
+
+[sub_resource type="Theme" id="Theme_7vrkn"]
+Label/font_sizes/font_size = 25
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -91,13 +104,246 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="HSeparator" type="HSeparator" parent="new_game_menu"]
+layout_mode = 2
+theme_override_constants/separation = 100
+theme_override_styles/separator = SubResource("StyleBoxEmpty_7vrkn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="new_game_menu"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="new_game_menu/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_fu7sn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="new_game_menu/HBoxContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="new_game_menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="new_game_menu/HBoxContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+text = "Map:"
+
+[node name="map_selector_button" type="OptionButton" parent="new_game_menu/HBoxContainer/VBoxContainer/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="new_game_menu/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jix8l")
+
+[node name="HSeparator2" type="HSeparator" parent="new_game_menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_glbon")
+
 [node name="new_game_start" type="Button" parent="new_game_menu"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "New Game"
 
+[node name="HSeparator3" type="HSeparator" parent="new_game_menu"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_nlkkf")
+
+[node name="settings_menu" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSeparator" type="HSeparator" parent="settings_menu"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="settings_menu"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="settings_menu/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Settings"
+
+[node name="TabContainer" type="TabContainer" parent="settings_menu"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="General" type="VBoxContainer" parent="settings_menu/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HSeparator" type="HSeparator" parent="settings_menu/TabContainer/General"]
+layout_mode = 2
+
+[node name="video_settings" type="VBoxContainer" parent="settings_menu/TabContainer/General"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/General/video_settings/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/General/video_settings/HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_7vrkn")
+text = "Video Settings"
+
+[node name="HSeparator2" type="HSeparator" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="Fullscreen" type="HBoxContainer" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/General/video_settings/Fullscreen"]
+layout_mode = 2
+
+[node name="fullscreen_button" type="CheckButton" parent="settings_menu/TabContainer/General/video_settings/Fullscreen"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fullscreen
+"
+
+[node name="HSeparator" type="HSeparator" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="Resolution" type="HBoxContainer" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/General/video_settings/Resolution"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/General/video_settings/Resolution"]
+layout_mode = 2
+text = "Resolusion"
+
+[node name="VSeparator2" type="VSeparator" parent="settings_menu/TabContainer/General/video_settings/Resolution"]
+layout_mode = 2
+
+[node name="Resolution_button" type="OptionButton" parent="settings_menu/TabContainer/General/video_settings/Resolution"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="settings_menu/TabContainer/General/video_settings"]
+layout_mode = 2
+
+[node name="Audio" type="VBoxContainer" parent="settings_menu/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Keybinds" type="VBoxContainer" parent="settings_menu/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer"]
+layout_mode = 2
+text = "Movement"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
+layout_mode = 2
+text = "Forwards:"
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
+layout_mode = 2
+
+[node name="forwards_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
+layout_mode = 2
+text = "Backwards:"
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
+layout_mode = 2
+
+[node name="backwards_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
+layout_mode = 2
+text = "Left:"
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
+layout_mode = 2
+
+[node name="left_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="settings_menu/TabContainer/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
+layout_mode = 2
+text = "Right:"
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
+layout_mode = 2
+
+[node name="right_keybind_button" type="Button" parent="settings_menu/TabContainer/Keybinds/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="settings_menu"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="settings_menu/HBoxContainer2"]
+layout_mode = 2
+
+[node name="exit_setting_buttons" type="Button" parent="settings_menu/HBoxContainer2"]
+layout_mode = 2
+text = "Exit Settings"
+
+[node name="VSeparator2" type="VSeparator" parent="settings_menu/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="save_setting_button" type="Button" parent="settings_menu/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save Settings"
+
+[node name="VSeparator3" type="VSeparator" parent="settings_menu/HBoxContainer2"]
+layout_mode = 2
+
 [connection signal="pressed" from="menu_container/buttons_container/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="menu_container/buttons_container/load_button" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="menu_container/buttons_container/settings_button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="menu_container/buttons_container/quit_button" to="." method="_on_quit_button_pressed"]
+[connection signal="item_selected" from="new_game_menu/HBoxContainer/VBoxContainer/HSplitContainer/map_selector_button" to="." method="_on_map_selector_button_item_selected"]
 [connection signal="pressed" from="new_game_menu/new_game_start" to="." method="_on_new_game_start_pressed"]
+[connection signal="toggled" from="settings_menu/TabContainer/General/video_settings/Fullscreen/fullscreen_button" to="." method="_on_fullscreen_button_toggled"]
+[connection signal="item_selected" from="settings_menu/TabContainer/General/video_settings/Resolution/Resolution_button" to="." method="_on_resolution_button_item_selected"]
+[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer2/forwards_keybind_button" to="." method="_on_forwards_keybind_button_pressed"]
+[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer3/backwards_keybind_button" to="." method="_on_backwards_keybind_button_pressed"]
+[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer4/left_keybind_button" to="." method="_on_left_keybind_button_pressed"]
+[connection signal="pressed" from="settings_menu/TabContainer/Keybinds/HBoxContainer5/right_keybind_button" to="." method="_on_right_keybind_button_pressed"]
+[connection signal="pressed" from="settings_menu/HBoxContainer2/exit_setting_buttons" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="settings_menu/HBoxContainer2/save_setting_button" to="." method="_on_save_setting_button_pressed"]

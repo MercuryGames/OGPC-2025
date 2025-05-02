@@ -13,11 +13,14 @@ var posDiffpast = Vector3(0,0,0)
 @export var obj_name: String
 @export var can_grab: bool
 @export var can_pickup: bool
+@export var can_interact: bool
+@onready var scene_path = self.scene_file_path
 
-@onready var id = [obj_id, useble, effect, effect_amount, obj_name, can_grab, can_pickup]
+@onready var id = [obj_id, useble, effect, effect_amount, obj_name, can_grab, can_pickup, can_interact, scene_path]
 var id2 = 0 #for spawning
 var spawned = false #for spawning
 # Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	if spawned:
 		id = id2

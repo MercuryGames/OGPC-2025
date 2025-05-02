@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://olswxf0dh2gi"]
+
+[ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_hhwtg"]
+[ext_resource type="ArrayMesh" uid="uid://n4s17y22gmky" path="res://Props/bin.obj" id="2_u7vf5"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3u120"]
+points = PackedVector3Array(-0.600269, 0.88403, -0.625325, -0.537911, 0.821608, -0.656469, -0.336539, -0.978123, 0.4153, 0.403277, -0.924799, -0.502212, -0.600269, 0.914852, 0.526654, 0.626787, 0.917061, -0.6079, -0.396859, -0.918888, -0.514294, 0.404465, -0.89836, 0.405134, 0.676393, 0.759185, 0.557917, 0.676393, 0.759185, -0.656469, 0.498916, 0.932772, 0.500819, 0.0831386, 0.944636, -0.606343, -0.396446, -0.918034, 0.4153, -0.506794, 0.759185, 0.557917, -0.33769, -0.981072, -0.51528, 0.400963, -0.948167, 0.371636, 0.375572, -0.958259, -0.504231, -0.600269, 0.914852, -0.625325, 0.504903, 0.945137, -0.606633, 0.0827329, 0.935963, 0.502663, 0.616803, 0.901187, 0.499761, -0.506794, 0.759185, -0.656469, -0.600269, 0.88403, 0.526654, -0.537911, 0.852819, 0.557917, -0.537911, 0.852819, -0.656469, 0.400634, -0.947323, -0.32483, -0.537911, 0.821608, 0.557917)
+
+[node name="The_Bin" type="RigidBody3D"]
+mass = 11.61
+script = ExtResource("1_hhwtg")
+obj_id = 2001
+obj_name = "The Bin"
+can_grab = true
+
+[node name="Bin" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+mesh = ExtResource("2_u7vf5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_3u120")

@@ -1,16 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqfg257x73pjd"]
+[gd_scene load_steps=9 format=3 uid="uid://bqfg257x73pjd"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_xq87f"]
+[ext_resource type="Script" uid="uid://caqb3nm565y5i" path="res://player.gd" id="1_xq87f"]
 [ext_resource type="Theme" uid="uid://ceb54j815ji87" path="res://UI.tres" id="2_ecp58"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
+radius = 0.25
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
 size = Vector2(50, 50)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_onrkg"]
+
+[sub_resource type="Texture2DRD" id="Texture2DRD_i3pqv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hqtel"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sweqy"]
+
 [node name="Player" type="CharacterBody3D" groups=["Persist"]]
 process_mode = 1
-transform = Transform3D(0.999008, 0, 0, 0, 0.999008, 0, 0, 0, 0.999008, 0, 0, 0)
 input_ray_pickable = false
 script = ExtResource("1_xq87f")
 run_multiplier = 1.3
@@ -37,14 +45,18 @@ target_position = Vector3(0, -2, 0)
 
 [node name="grabpointer" type="Node3D" parent="Camera3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="Panel" type="Panel" parent="HUD"]
-offset_top = 560.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -86.0
 offset_right = 350.0
-offset_bottom = 646.0
+grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/Panel"]
 layout_mode = 1
@@ -101,22 +113,31 @@ theme = ExtResource("2_ecp58")
 theme_override_font_sizes/font_size = 20
 text = "Hydration"
 
-[node name="VSplitContainer" type="VSplitContainer" parent="HUD"]
-offset_left = 540.0
-offset_top = 272.0
-offset_right = 598.0
-offset_bottom = 295.0
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="HUD/VSplitContainer"]
-position = Vector2(29, 48)
-scale = Vector2(0.0200001, 0.94)
+[node name="Sprite2D" type="Sprite2D" parent="HUD/AspectRatioContainer"]
+scale = Vector2(0.05, 1)
 texture = SubResource("PlaceholderTexture2D_6kryx")
+centered = false
 
-[node name="Label" type="Label" parent="HUD/VSplitContainer"]
+[node name="Label" type="Label" parent="HUD"]
 unique_name_in_owner = true
-layout_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_ecp58")
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
 
 [node name="Inventory" type="Panel" parent="HUD"]
 unique_name_in_owner = true
@@ -355,12 +376,183 @@ layout_mode = 2
 theme = ExtResource("2_ecp58")
 text = "Cancel"
 
+[node name="Load Menu" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="load_menu_vbox" type="VBoxContainer" parent="HUD/Load Menu"]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="HSeparator" type="HSeparator" parent="HUD/Load Menu/load_menu_vbox"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Load Menu/load_menu_vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="VSeparator" type="VSeparator" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="HUD/Load Menu/load_menu_vbox"]
+layout_mode = 2
+
+[node name="existing_saves_loadmenu" type="ItemList" parent="HUD/Load Menu/load_menu_vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD/Load Menu/load_menu_vbox"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="load_menu_exit" type="Button" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel
+"
+
+[node name="VSeparator2" type="VSeparator" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer2"]
+layout_mode = 2
+
+[node name="zone_entered" type="Label" parent="HUD"]
+unique_name_in_owner = true
+offset_left = 174.0
+offset_top = 491.0
+offset_right = 390.0
+offset_bottom = 514.0
+theme = ExtResource("2_ecp58")
+
+[node name="Tutorial Car Menu" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BatteryLable" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -100.0
+offset_right = -192.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Battery"
+
+[node name="TireLabel" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 123.0
+text = "Tire"
+
+[node name="Label" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 100.0
+offset_right = 280.0
+offset_bottom = 123.0
+text = "Tire"
+
+[node name="Label2" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 100.0
+offset_right = 360.0
+offset_bottom = 123.0
+text = "Gear"
+
+[node name="BatteryIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 60.0
+offset_top = 125.0
+offset_right = 100.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_onrkg")
+
+[node name="TireIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 157.0
+offset_top = 125.0
+offset_right = 197.0
+offset_bottom = 165.0
+texture = SubResource("Texture2DRD_i3pqv")
+
+[node name="TireIndicator2" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 237.0
+offset_top = 125.0
+offset_right = 277.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_hqtel")
+
+[node name="GearIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 320.0
+offset_top = 125.0
+offset_right = 360.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_sweqy")
+
+[node name="Inventory2" type="ItemList" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 399.0
+offset_right = 599.0
+offset_bottom = 400.0
+
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
 [connection signal="pressed" from="HUD/Pause Menu/button_return_game" to="." method="_on_button_return_game_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/HSplitContainer/button_save" to="." method="_on_button_save_pressed"]
+[connection signal="pressed" from="HUD/Pause Menu/HSplitContainer2/button_load" to="." method="_on_button_load_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/button_quit_to_menu" to="." method="_on_button_quit_to_menu_pressed"]
 [connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_topbar/new_save_button" to="." method="_on_new_save_button_pressed"]
 [connection signal="pressed" from="HUD/save_menu/save_menu_vboxcontainer_1/save_menu_cancel" to="." method="_on_save_menu_cancel_pressed"]
 [connection signal="text_submitted" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/file_name_box/new_file_name" to="." method="_on_new_file_name_text_submitted"]
 [connection signal="pressed" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can/new_save_file_confirm" to="." method="_on_new_save_file_confirm_pressed"]
 [connection signal="pressed" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can/new_save_file_cancel" to="." method="_on_new_save_file_cancel_pressed"]
+[connection signal="item_activated" from="HUD/Load Menu/load_menu_vbox/existing_saves_loadmenu" to="." method="_on_existing_saves_loadmenu_item_activated"]
+[connection signal="pressed" from="HUD/Load Menu/load_menu_vbox/HBoxContainer2/load_menu_exit" to="." method="_on_load_menu_exit_pressed"]
+[connection signal="item_activated" from="HUD/Tutorial Car Menu/Inventory2" to="." method="_on_inventory_2_item_activated"]

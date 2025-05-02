@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqma7ag7qlch3"]
+
+[ext_resource type="ArrayMesh" uid="uid://cuwnyakn8mmq1" path="res://Props/Ford Pinto (proper version).obj" id="1_0fqvh"]
+
+[node name="SoftBody3D" type="SoftBody3D"]
+mesh = ExtResource("1_0fqvh")
+total_mass = 100.01

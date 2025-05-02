@@ -51,7 +51,21 @@ var all_saves_list = []
 var save_menu_state = false
 var New_Save_File_Name = ""
 
+@onready var saves_menu_166 = %existing_saves_loadmenu
 
+@onready var Inventory2 = %Inventory2
+@onready var tutorial_car_menu = %"Tutorial Car Menu"
+var inventory2_list = []
+var tutorial_car_menu_state = false
+var turorial_car_parts = []
+var turotial_car_needed_parts = []
+var tire_indicator1_showing = false
+
+var message_displayed = false
+var message_time = 10
+var message_dislayed_time = 0
+
+@onready var id = [2000, 0, 0, 0, "Agent Orange", false, false, false]
 
 signal item_spawned(id)
 signal return_to_main_menu()
@@ -74,7 +88,7 @@ func _input(event):
 		var MouseEvent = event.relative * MouseSensitivity
 		CameraLook(MouseEvent)
 	if event.is_action_pressed("ui_interact") and holding_object == false: #Adjust to match your InputMap
-		if interaction_raycast.is_colliding():
+		if interaction_raycast.is_colliding() and tutorial_car_menu_state == false:
 			var interactable = interaction_raycast.get_collider()
 			print(interactable.id)
 			if interactable.id[6] == true:
@@ -82,8 +96,23 @@ func _input(event):
 				#inventoryItemNumber += 1
 				inventory.append(interactable.id)
 				inventoryList.add_item(str(interactable.id[0],",",interactable.id[4]), null, true)
+				if interactable.id[0] >= 5000 and interactable.id[0] < 6000:
+					Inventory2.add_item(str(interactable.id[4]), null, true)
+					inventory2_list.append(interactable.id[4])
 				interactable.yoink(self)
 				interactable.hide()
+			elif interactable.id[7]:
+				print(interactable.id)
+				if interactable.id[0] == 7005:
+					tutorial_car_menu_state = true
+					turorial_car_parts = interactable.parts_inplace
+					turotial_car_needed_parts = interactable.parts_needed
+					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+					tutorial_car_menu.show()
+		elif tutorial_car_menu_state == true:
+			tutorial_car_menu.hide()
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			tutorial_car_menu_state = false
 	elif event.is_action_pressed("ui_grab") and holding_object == false:
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
@@ -158,10 +187,15 @@ func _process(delta):
 		if interactable != null and interactable.has_method("yoink"):
 			if interactable != null and interactable.id[5] and interactable.id[6]:
 				interaction_label.text = "Q to grab|E to yoink"
-			if interactable != null and interactable.id[5]:
+			elif interactable != null and interactable.id[5]:
 				interaction_label.text = "Q to grab"
-			if interactable != null and interactable.id[6]:
+			elif interactable != null and interactable.id[6]:
 				interaction_label.text = "E to yoink"
+			elif interactable != null and interactable.id[7]:
+				interaction_label.text = "E to interact"
+		elif interactable != null and interactable.has_method("interact"):
+			if interactable != null and interactable.id[7]:
+				interaction_label.text = "E to interact"
 
 	else:
 		if !interaction_is_reset:
@@ -172,7 +206,27 @@ func _process(delta):
 	food_bar.value = hunger
 	hydration_bar.value = hydration
 	
-
+	if message_displayed:
+		message_dislayed_time += delta
+		print(message_dislayed_time)
+	if message_dislayed_time >= message_time:
+		%zone_entered.set_text("")
+		message_dislayed_time = 0
+		message_displayed = false
+	
+	if health <= 0:
+		death()
+	
+	#for i in turorial_car_parts:
+	#	if i == turotial_car_needed_parts[0]:
+	#		%BatteryIndicator1.show()
+	#	elif i == turotial_car_needed_parts[1] and !tire_indicator1_showing:
+	#		%TireIndicator1.show()
+	#		tire_indicator1_showing = true
+	#	elif i == turotial_car_needed_parts[2]:
+	#		%TireIndicator2.show()
+	#	elif i == turotial_car_needed_parts[3]:
+	#		%GearIndicator1.show()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -187,7 +241,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("left", "right", "forwards", "backwards")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if Input.is_action_pressed("run"):
 		SPEED = base_speed*run_multiplier
@@ -204,10 +258,12 @@ func _physics_process(delta):
 
 func use_item(index: int):
 	print(inventory[index])
-	if inventory[index][1] == 0:
+	if inventory[index][0] >= 5000 and inventory[index][0] < 6000:
+		pass
+	elif inventory[index][1] == 0:
 		item_spawned.emit(inventory[index])
 		inventoryList.remove_item(index)
-		inventory.pop(index)
+		inventory.remove_at(index)
 	elif inventory[index][1] == 1:
 		if inventory[index][2] == 0:
 			item_spawned.emit(inventory[index])
@@ -278,7 +334,6 @@ func save_game(file_name):
 		if node.scene_file_path.is_empty():
 			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
 			continue
-		
 		if !node.has_method("save"):
 			print("persistent node '%s' is missing a save() function, skipped" % node.name)
 			continue
@@ -290,11 +345,50 @@ func save_game(file_name):
 func load_game(file_name):
 	var file_sname = str("user://savegames",file_name,".save")
 	if not FileAccess.file_exists(file_sname):
+		print("****")
 		return # Error! We don't have a save to load.
 	var save_file = FileAccess.open(file_sname, FileAccess.READ)
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for i in save_nodes:
+		if i == %player:
+			continue
+		i.queue_free()
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		# Creates the helper class to interact with JSON.
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		
+		if node_data["filename"] == "player.gd":
+			for k in node_data.keys():
+				if k == "filename" or k == "parent":
+					continue
+				position = Vector3(node_data["pos_x"], node_data["pos_y"], node_data["pos_z"])
+				health = node_data["health"]
+				hunger = node_data["hunger"]
+				hydration = node_data["hydration"]
+				inventory = node_data["invetory"]
+			pass
+		else:
+			var new_object = load(node_data["filename"]).instantiate()
+			get_node(node_data["parent"]).add_child(new_object)
+			new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
+
+		# Now we set the remaining variables.
+			for i in node_data.keys():
+				if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+					continue
+				new_object.set(i, node_data[i])
 	return
-	
-	
 	
 func save():
 	var save_dict = {
@@ -316,8 +410,67 @@ func _on_new_save_file_confirm_pressed() -> void:
 	elif New_Save_File_Name == "":
 		new_save_name.clear()
 		new_save_name.placeholder_text = "Bad File Name"
+	
 
 func _on_new_save_file_cancel_pressed() -> void:
 	new_save_name.clear()
 	New_Save_File_Name = ""
 	new_save_menu.hide()
+
+
+func _on_button_load_pressed() -> void:
+	if !DirAccess.dir_exists_absolute("user://savegames/"):
+		print("making dir")
+		DirAccess.open("user://").make_dir("user://savegames/")
+	var save_folder = DirAccess.open("user://savegames/")
+	if save_folder:
+		print("it worked")
+		all_saves_list = save_folder.get_files()
+	print(all_saves_list)
+	%"Load Menu".show()
+	for i in all_saves_list:
+		if i not in saves_menu_166.get_groups():
+			saves_menu_166.add_item(String(i))
+	
+	
+func _on_load_menu_exit_pressed() -> void:
+	%"Load Menu".hide()
+
+
+func _on_existing_saves_loadmenu_item_activated(index: int) -> void:
+	print(index)
+	load_game(saves_menu_166.get_index(index))
+	
+func death():
+	pass
+
+
+func _on_milando_message_zone_entered(text) -> void:
+	%zone_entered.set_text(text)
+	message_displayed = true
+	
+#func inventory2_sync():
+#	var index = 0
+#	for i in inventory:
+#		if i >= 5000 and i < 6000:
+#			Inventory2.append(inventoryList[index])
+
+
+func _on_inventory_2_item_activated(index: int) -> void:
+	if index not in turorial_car_parts:
+		turorial_car_parts.append(inventory2_list[index])
+		Inventory2.remove_item(index)
+		inventoryList.remove_item(index)
+		inventory2_list.remove_at(index)
+		inventory.remove_at(index)
+		print(turorial_car_parts)
+		print(index)
+		for i in turorial_car_parts:
+			if i == turotial_car_needed_parts[0]:
+				%BatteryIndicator1.show()
+			elif i == turotial_car_needed_parts[1]:
+				%TireIndicator1.show()
+			elif i == turotial_car_needed_parts[2]:
+				%TireIndicator2.show()
+			elif i == turotial_car_needed_parts[3]:
+				%GearIndicator1.show()

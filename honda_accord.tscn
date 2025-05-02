@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvoulylfcos4o"]
+
+[ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_eo7vv"]
+[ext_resource type="ArrayMesh" uid="uid://dwbbcs3p8m6hw" path="res://Props/honda.obj" id="2_ac75s"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cfk4m"]
+points = PackedVector3Array(0.00444212, -0.0220453, -2.22861, 1.3991, -0.0917405, 2.23429, 3.33067e-16, -0.0920409, 2.24393, 0.0322412, 0.646768, 0.267866, 1.43901, 0.420611, -2.13945, 1.3192, -0.708902, -1.4418, 0.0365, -0.6866, 1.46226, 1.36987, 0.646768, 0.267866, 1.32628, -0.716768, 1.52861, 0.0365, -0.6866, -1.39496, 0.0207777, 0.658232, -1.08789, 1.39889, -0.370965, -2.23254, -0.0368977, 0.125459, 2.14055, -0.0368977, 0.420611, -2.13945, 1.43901, 0.125459, 2.14055, -1.11022e-16, -0.442568, 2.24393, 0.00321522, -0.370965, -2.23254, 1.3991, -0.440763, 2.23429, 1.38133, 0.658232, -1.08789, 1.39767, -0.0220453, -2.22861, 0.0140087, -0.502897, 2.13023, 1.3881, -0.502897, 2.13023, 1.3857, -0.501219, -0.957637)
+
+[node name="Honda Accord" type="RigidBody3D"]
+mass = 1370.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.5, 0)
+script = ExtResource("1_eo7vv")
+obj_id = 7001
+obj_name = "Honda Accord"
+
+[node name="Honda" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.700513, -0.116539, 0.0410502)
+mesh = ExtResource("2_ac75s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.700513, -0.116539, 0.0410502)
+shape = SubResource("ConvexPolygonShape3D_cfk4m")

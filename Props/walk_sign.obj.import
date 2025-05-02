@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://27gps2ilgf5b"
+path="res://.godot/imported/walk_sign.obj-a85fc9c995bad450cbd3443e5c4e684c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/walk_sign.obj-a85fc9c995bad450cbd3443e5c4e684c.mesh"]
+
+source_file="res://Props/walk_sign.obj"
+dest_files=["res://.godot/imported/walk_sign.obj-a85fc9c995bad450cbd3443e5c4e684c.mesh", "res://.godot/imported/walk_sign.obj-a85fc9c995bad450cbd3443e5c4e684c.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

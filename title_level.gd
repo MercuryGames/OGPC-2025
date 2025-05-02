@@ -1,11 +1,13 @@
 extends Node3D
 
 @onready var map0 = load("res://Tests/testroom.tscn")
+@export var map1: PackedScene
 #@onready var title_screen = load("res://title_level_1.tscn")
 #@onready var Title_level1 = %Title_Level1
 #@onready var main_menu = %"Main Menu"
 #@onready var title_screen = %Title_Level1
 #@onready var level = %Level
+@onready var maps = [map0,map1]
 
 #var level1
 # Called when the node enters the scene tree for the first time.
@@ -35,5 +37,4 @@ func _on_main_menu_quit_game() -> void:
 
 
 func _on_main_menu_start_new_game(map: Variant) -> void:
-	if map == 0:
-		get_tree().change_scene_to_packed(map0)
+	get_tree().change_scene_to_packed(maps[map])

@@ -3,6 +3,11 @@ extends Node3D
 
 @onready var player = %Player
 
+var wind_force = 1
+var wind_direction = deg_to_rad(25)
+var wind_vector = Vector3(sin(wind_direction)*wind_force,0,cos(wind_direction)*wind_force)
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#for i in get_children():
@@ -11,23 +16,29 @@ func _ready() -> void:
 	pass
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	#for i in get_children():
+		#if i.is_class("RigidBody3D"):
+		#	i.apply_force(wind_vector)
 	pass
-
-
+	
 func _on_player_item_spawned(id: Variant) -> void:
 	print(id)
 	var spawnx = player.get_global_position().x + 1 
 	var spawny = player.get_global_position().y + 1
 	var spawnz = player.get_global_position().z + 1
 	print(spawnx,spawny,spawnz)
-	if id[0] == 100:
+	
+	var node_path = id[8]
+	
+	if id[0]:
 		print(id)
-		var balll = ball.instantiate()
+		var node = load(node_path).instantiate()
 		
-		balll.initialize(spawnx,spawny,spawnz,id,%Player)
+		node.initialize(spawnx,spawny,spawnz,id,%Player)
 		
-		add_child(balll)
+		add_child(node)
 		
-		balll.define_things()
+		node.define_things()
