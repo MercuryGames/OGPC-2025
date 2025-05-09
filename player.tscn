@@ -1,8 +1,24 @@
-[gd_scene load_steps=27 format=4 uid="uid://bqfg257x73pjd"]
+[gd_scene load_steps=24 format=4 uid="uid://bqfg257x73pjd"]
 
 [ext_resource type="Script" uid="uid://caqb3nm565y5i" path="res://player.gd" id="1_xq87f"]
 [ext_resource type="Theme" uid="uid://ceb54j815ji87" path="res://UI.tres" id="2_ecp58"]
-[ext_resource type="Texture2D" uid="uid://dunaxypidn5re" path="res://green.png" id="4_hqtel"]
+[ext_resource type="Material" uid="uid://bhge7g6oj5nm6" path="res://Rain.tres" id="3_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bkcb8st2i2pmc" path="res://Props/Arrow.png" id="3_sweqy"]
+[ext_resource type="Texture2D" uid="uid://bw7sqdq22c8cd" path="res://Props/Smile.png" id="4_2hs0m"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
+radius = 0.25
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
+size = Vector2(50, 50)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_onrkg"]
+
+[sub_resource type="Texture2DRD" id="Texture2DRD_i3pqv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hqtel"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sweqy"]
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 resource_name = "GetUp"
@@ -48,76 +64,6 @@ _data = {
 &"Ladder": SubResource("Animation_hqtel"),
 &"RESET": SubResource("Animation_i3pqv")
 }
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
-radius = 0.25
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
-size = Vector2(50, 50)
-
-[sub_resource type="Animation" id="Animation_aqmvi"]
-resource_name = "Heart Beat"
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0.407644, 0.407644), Vector2(0.362278, 0.362278)]
-}
-
-[sub_resource type="Animation" id="Animation_ycrdy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.407644, 0.407644)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_5f3r4"]
-_data = {
-&"Heart Beat": SubResource("Animation_aqmvi"),
-&"RESET": SubResource("Animation_ycrdy")
-}
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i3pqv"]
-load_path = "res://.godot/imported/Water_bottle_back.png-fed5755e05c6adfa7dab3669059fba79.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hqtel"]
-load_path = "res://.godot/imported/Water_bottle_front.png-2abe557a5d1285a32d46678008f8d0dc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sweqy"]
-load_path = "res://.godot/imported/Water_bottle_fill.png-d7278a335096adb4d6fbc1008add5b41.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2hs0m"]
-load_path = "res://.godot/imported/Apple_back.png-6f8747b222871e87e5e0502db4df2df0.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1jxqw"]
-load_path = "res://.godot/imported/Apple_front.png-585ab6c73e93be1fefc8be14b19be5d9.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dw050"]
-load_path = "res://.godot/imported/Apple_fill.png-19a23d46fd9ada87b9636ee46d6a9136.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b26j0"]
-load_path = "res://.godot/imported/Heart_back.png-5fa62f5c49bb0c8a305cbe92721faa12.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n7ghd"]
-load_path = "res://.godot/imported/Heart_front.png-61f0f4393f51b0cf72187bee030f8877.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nvl01"]
-load_path = "res://.godot/imported/Heart_fill.png-71ef4a26152c2cad0db749b16824f709.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cj5vk"]
 
@@ -192,11 +138,25 @@ bind/15/name = &"Bone.016"
 bind/15/bone = -1
 bind/15/pose = Transform3D(-0.00454813, -0.00231316, 0.0708984, -3.70432e-09, -0.202452, -0.000810459, 0.202414, -5.19756e-05, 0.00159305, 2.9349e-05, 0.00310364, 0.000220325)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jxqw"]
+transparency = 1
+albedo_texture = ExtResource("3_sweqy")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sweqy"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dw050"]
+transparency = 1
+albedo_texture = ExtResource("4_2hs0m")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sweqy"]
-albedo_texture = ExtResource("4_hqtel")
+albedo_color = Color(0.0588235, 0.333333, 1, 0.470588)
+billboard_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2hs0m"]
-size = Vector2(10, 10)
+material = SubResource("StandardMaterial3D_sweqy")
+size = Vector2(0.125, 0.5)
+orientation = 2
 
 [node name="Player" type="CharacterBody3D" groups=["Persist"]]
 process_mode = 1
@@ -212,9 +172,12 @@ hydration_drain_buff_running = 0.1
 starvation_damage = 15.0
 dehydration_damage = 20.0
 
+[node name="Body" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05494, 0)
+shape = SubResource("CapsuleShape3D_qc8b6")
+
 [node name="PCam" type="Camera3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80137, -0.141092)
+transform = Transform3D(1.00099, 0, 0, 0, 1.00099, 0, 0, 0, 1.00099, 0, 1.80137, -0.141092)
 
 [node name="raycast3d" type="RayCast3D" parent="PCam"]
 unique_name_in_owner = true
@@ -223,36 +186,104 @@ target_position = Vector3(0, -2, 0)
 
 [node name="grabpointer" type="Node3D" parent="PCam"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 
-[node name="PlayerAnim" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_hqtel")
-}
-
-[node name="Body" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05494, 0)
-shape = SubResource("CapsuleShape3D_qc8b6")
+[node name="SpotLight3D" type="SpotLight3D" parent="PCam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.472824, -0.689278, -0.0126596)
+spot_range = 13.9117
+spot_angle = 11.5315
 
 [node name="HUD" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
-[node name="VSplitContainer" type="VSplitContainer" parent="HUD"]
-offset_left = 540.0
-offset_top = 272.0
-offset_right = 598.0
-offset_bottom = 295.0
+[node name="Panel" type="Panel" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -86.0
+offset_right = 350.0
+grow_vertical = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="HUD/VSplitContainer"]
-position = Vector2(29, 48)
-scale = Vector2(0.0200001, 0.94)
-texture = SubResource("PlaceholderTexture2D_6kryx")
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="HUD/VSplitContainer"]
+[node name="Health_Container" type="VSplitContainer" parent="HUD/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Meter_Health" type="ProgressBar" parent="HUD/Panel/HBoxContainer/Health_Container"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ecp58")
+
+[node name="Label_Health" type="Label" parent="HUD/Panel/HBoxContainer/Health_Container"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+theme_override_font_sizes/font_size = 20
+text = "Health"
 horizontal_alignment = 1
+
+[node name="Food_Container" type="VSplitContainer" parent="HUD/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Meter_Food" type="ProgressBar" parent="HUD/Panel/HBoxContainer/Food_Container"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+
+[node name="Label_Food" type="Label" parent="HUD/Panel/HBoxContainer/Food_Container"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+theme_override_font_sizes/font_size = 20
+text = "Food"
+horizontal_alignment = 1
+
+[node name="Hydration_Container" type="VSplitContainer" parent="HUD/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Meter_Hydration" type="ProgressBar" parent="HUD/Panel/HBoxContainer/Hydration_Container"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+
+[node name="label_hydration" type="Label" parent="HUD/Panel/HBoxContainer/Hydration_Container"]
+layout_mode = 2
+theme = ExtResource("2_ecp58")
+theme_override_font_sizes/font_size = 20
+text = "Hydration"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/AspectRatioContainer"]
+scale = Vector2(0.05, 1)
+texture = SubResource("PlaceholderTexture2D_6kryx")
+centered = false
+
+[node name="Label" type="Label" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ecp58")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
 
 [node name="Inventory" type="Panel" parent="HUD"]
 unique_name_in_owner = true
@@ -549,64 +580,123 @@ text = "Cancel
 [node name="VSeparator2" type="VSeparator" parent="HUD/Load Menu/load_menu_vbox/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Hotbar" type="Panel" parent="HUD"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -600.0
+[node name="zone_entered" type="Label" parent="HUD"]
+unique_name_in_owner = true
+offset_left = 174.0
+offset_top = 491.0
+offset_right = 390.0
+offset_bottom = 514.0
+theme = ExtResource("2_ecp58")
+
+[node name="Tutorial Car Menu" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BatteryLable" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
 offset_top = -100.0
-grow_horizontal = 0
-grow_vertical = 0
+offset_right = -192.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Battery"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
-anchors_preset = -1
-anchor_left = 0.003
-anchor_top = 0.847
-anchor_right = 0.434
-anchor_bottom = 0.991
-offset_left = -0.456
-offset_top = -53.856
-offset_right = 925.032
-offset_bottom = 313.832
-scale = Vector2(0.32, 0.32)
+[node name="TireLabel" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 123.0
+text = "Tire"
 
-[node name="Health_Anim" type="AnimationPlayer" parent="HUD/HBoxContainer"]
-root_node = NodePath("../Meter_Health")
+[node name="Label" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 100.0
+offset_right = 280.0
+offset_bottom = 123.0
+text = "Tire"
+
+[node name="Label2" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 100.0
+offset_right = 360.0
+offset_bottom = 123.0
+text = "Gear"
+
+[node name="BatteryIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 60.0
+offset_top = 125.0
+offset_right = 100.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_onrkg")
+
+[node name="TireIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 157.0
+offset_top = 125.0
+offset_right = 197.0
+offset_bottom = 165.0
+texture = SubResource("Texture2DRD_i3pqv")
+
+[node name="TireIndicator2" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 237.0
+offset_top = 125.0
+offset_right = 277.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_hqtel")
+
+[node name="GearIndicator1" type="TextureRect" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 320.0
+offset_top = 125.0
+offset_right = 360.0
+offset_bottom = 165.0
+texture = SubResource("PlaceholderTexture2D_sweqy")
+
+[node name="Inventory2" type="ItemList" parent="HUD/Tutorial Car Menu"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 399.0
+offset_right = 599.0
+offset_bottom = 400.0
+
+[node name="PlayerAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
-&"": SubResource("AnimationLibrary_5f3r4")
+&"": SubResource("AnimationLibrary_hqtel")
 }
-speed_scale = 3.0
 
-[node name="Meter_Hydration" type="TextureProgressBar" parent="HUD/HBoxContainer"]
+[node name="Player_model" type="Skeleton3D" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-fill_mode = 3
-texture_under = SubResource("CompressedTexture2D_i3pqv")
-texture_over = SubResource("CompressedTexture2D_hqtel")
-texture_progress = SubResource("CompressedTexture2D_sweqy")
-texture_progress_offset = Vector2(5, 55.44)
-
-[node name="Meter_Food" type="TextureProgressBar" parent="HUD/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-fill_mode = 3
-texture_under = SubResource("CompressedTexture2D_2hs0m")
-texture_over = SubResource("CompressedTexture2D_1jxqw")
-texture_progress = SubResource("CompressedTexture2D_dw050")
-texture_progress_offset = Vector2(0, 95.4)
-
-[node name="Meter_Health" type="TextureProgressBar" parent="HUD/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-fill_mode = 3
-texture_under = SubResource("CompressedTexture2D_b26j0")
-texture_over = SubResource("CompressedTexture2D_n7ghd")
-texture_progress = SubResource("CompressedTexture2D_nvl01")
-texture_progress_offset = Vector2(15, 15)
-
-[node name="Skeleton3D" type="Skeleton3D" parent="."]
 transform = Transform3D(-57.115, 4.99315e-06, 2.18258e-13, 0, -2.49658e-06, 57.115, 4.99315e-06, 57.115, 2.49658e-06, 0, 1.00533, 0)
 bones/0/name = "Bone"
 bones/0/parent = -1
@@ -721,7 +811,7 @@ bones/15/position = Vector3(-1.85537e-12, 0.0074243, -7.24496e-11)
 bones/15/rotation = Quaternion(-0.000181906, 1.20733e-07, -0.704401, 0.709802)
 bones/15/scale = Vector3(1, 1, 1)
 
-[node name="Cube_001" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="Cube_001" type="MeshInstance3D" parent="Player_model"]
 ignore_occlusion_culling = true
 gi_mode = 0
 mesh = SubResource("ArrayMesh_onrkg")
@@ -730,14 +820,28 @@ skin = SubResource("Skin_i3pqv")
 [node name="MCam" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+cull_mask = 1048573
 
 [node name="playermarker" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.01901, 0, 0, 0, 1.01901, 0, 0, 0, 1.01901, 0, 5.01508, 0)
-material_override = SubResource("StandardMaterial3D_sweqy")
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 5.01508, 0)
+material_override = SubResource("StandardMaterial3D_1jxqw")
 ignore_occlusion_culling = true
-mesh = SubResource("PlaneMesh_2hs0m")
+mesh = SubResource("PlaneMesh_sweqy")
 
-[connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]
+[node name="playermarker2" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 5.01508, 0)
+material_override = SubResource("StandardMaterial3D_dw050")
+ignore_occlusion_culling = true
+mesh = SubResource("PlaneMesh_sweqy")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+layers = 2
+amount = 4000
+lifetime = 4.0
+process_material = ExtResource("3_i3pqv")
+draw_pass_1 = SubResource("PlaneMesh_2hs0m")
+
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
 [connection signal="pressed" from="HUD/Pause Menu/button_return_game" to="." method="_on_button_return_game_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/HSplitContainer/button_save" to="." method="_on_button_save_pressed"]
@@ -750,3 +854,4 @@ mesh = SubResource("PlaneMesh_2hs0m")
 [connection signal="pressed" from="HUD/save_menu/new_save_file_menu/new_save_file_menu_vbox/new_save_con_can/new_save_file_cancel" to="." method="_on_new_save_file_cancel_pressed"]
 [connection signal="item_activated" from="HUD/Load Menu/load_menu_vbox/existing_saves_loadmenu" to="." method="_on_existing_saves_loadmenu_item_activated"]
 [connection signal="pressed" from="HUD/Load Menu/load_menu_vbox/HBoxContainer2/load_menu_exit" to="." method="_on_load_menu_exit_pressed"]
+[connection signal="item_activated" from="HUD/Tutorial Car Menu/Inventory2" to="." method="_on_inventory_2_item_activated"]

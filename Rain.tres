@@ -1,0 +1,14 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://bhge7g6oj5nm6"]
+
+[resource]
+emission_shape_offset = Vector3(0, 50, 0)
+emission_shape_scale = Vector3(50, 0, 50)
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 20.0
+initial_velocity_max = 57.47
+scale_over_velocity_max = 413.79
+hue_variation_min = -0.49
+hue_variation_max = 0.23

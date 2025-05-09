@@ -6,7 +6,8 @@ func _ready():
 	add_child(outlineMesh)
 	outlineMesh.set_mesh(mesh_outline)
 	outlineMesh.set_surface_override_material(0, test)
-	outlineMesh.hide()
+	outlineMesh.show()
+	print("1001")
 
 func hideme():
 	outlineMesh.hide()
@@ -15,5 +16,5 @@ func hideme():
 
 func showme():
 	outlineMesh.show()
-	get_active_material(0).no_depth_test = true
+	#get_active_material(0).no_depth_test = true
 	get_active_material(0).render_priority = 1

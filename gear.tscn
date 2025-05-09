@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=4 uid="uid://h3hwi3qyrqq0"]
+[gd_scene load_steps=7 format=4 uid="uid://h3hwi3qyrqq0"]
 
 [ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_y8ccp"]
+[ext_resource type="Script" uid="uid://c3v0rpce77riw" path="res://outlineMaker.gd" id="2_y8ccp"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_r2dgl"]
 _surfaces = [{
@@ -44,11 +45,13 @@ script = ExtResource("1_y8ccp")
 obj_id = 5002
 obj_name = "Gear"
 can_pickup = true
+important_obj = true
 
 [node name="Gear" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
 mesh = SubResource("ArrayMesh_u3nac")
 surface_material_override/0 = SubResource("StandardMaterial3D_y8ccp")
+script = ExtResource("2_y8ccp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)

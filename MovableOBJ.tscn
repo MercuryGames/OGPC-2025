@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4np2eak8haw4"]
+[gd_scene load_steps=7 format=3 uid="uid://d4np2eak8haw4"]
 
-[ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_k3nn3"]
-[ext_resource type="Script" uid="uid://cwebgnggual4h" path="res://outlineMaker.gd" id="2_nytf2"]
+[ext_resource type="Script" path="res://Object_Script_1.gd" id="1_k3nn3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ku6tt"]
 friction = 0.3
@@ -9,10 +8,10 @@ bounce = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twxeo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8tvb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdr0y"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_wcmmb"]
-material = SubResource("StandardMaterial3D_r8tvb")
+material = SubResource("StandardMaterial3D_qdr0y")
 
 [sub_resource type="Skin" id="Skin_1uhl6"]
 
@@ -20,7 +19,6 @@ material = SubResource("StandardMaterial3D_r8tvb")
 physics_material_override = SubResource("PhysicsMaterial_ku6tt")
 can_sleep = false
 script = ExtResource("1_k3nn3")
-obj_id = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_twxeo")
@@ -28,6 +26,5 @@ shape = SubResource("BoxShape3D_twxeo")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_wcmmb")
 skin = SubResource("Skin_1uhl6")
-script = ExtResource("2_nytf2")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

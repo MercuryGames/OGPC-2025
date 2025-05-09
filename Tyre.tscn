@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=4 uid="uid://dgf7twiajd61q"]
+[gd_scene load_steps=6 format=4 uid="uid://dgf7twiajd61q"]
 
 [ext_resource type="Script" uid="uid://hr5vnglgipek" path="res://Object_Script_1.gd" id="1_r58pk"]
+[ext_resource type="Script" uid="uid://c3v0rpce77riw" path="res://outlineMaker.gd" id="2_r58pk"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5ukjq"]
 _surfaces = [{
@@ -44,9 +45,11 @@ obj_id = 5001
 obj_name = "Tire"
 can_grab = true
 can_pickup = true
+important_obj = true
 
 [node name="Wheel" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_mf4tq")
+script = ExtResource("2_r58pk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_0003m")
