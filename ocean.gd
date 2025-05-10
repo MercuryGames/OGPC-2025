@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-@onready var player = get_tree().get_root().get_node("/root/TestRoom/Player")
+@onready var player = get_parent().get_node("%Player")
 
 var rando = RandomNumberGenerator.new()
 

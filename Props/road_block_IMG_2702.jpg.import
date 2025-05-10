@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://yxnmgwpqo5pl"
+path.s3tc="res://.godot/imported/road_block_IMG_2702.jpg-e3ec99cfa88a25fa86feaa4ff4ccffc4.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "0c50ed62b2e4bd5242ba9ea5dc8544c3"
+}
+
+[deps]
+
+source_file="res://Props/road_block_IMG_2702.jpg"
+dest_files=["res://.godot/imported/road_block_IMG_2702.jpg-e3ec99cfa88a25fa86feaa4ff4ccffc4.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

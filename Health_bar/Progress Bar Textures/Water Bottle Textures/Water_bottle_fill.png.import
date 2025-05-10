@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv112vj5a2u7g"
-path="res://.godot/imported/Water_bottle_fill.png-43185e2604c9b0b58add0606feff37e4.ctex"
+path="res://.godot/imported/Water_bottle_fill.png-d7278a335096adb4d6fbc1008add5b41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Health_bar/Progress Bar Textures/Water Bottle Textures/Water_bottle_fill.png"
-dest_files=["res://.godot/imported/Water_bottle_fill.png-43185e2604c9b0b58add0606feff37e4.ctex"]
+source_file="res://Progress Bar Textures/Water Bottle Textures/Water_bottle_fill.png"
+dest_files=["res://.godot/imported/Water_bottle_fill.png-d7278a335096adb4d6fbc1008add5b41.ctex"]
 
 [params]
 

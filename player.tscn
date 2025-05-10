@@ -1,16 +1,16 @@
-[gd_scene load_steps=24 format=4 uid="uid://bqfg257x73pjd"]
+[gd_scene load_steps=27 format=4 uid="uid://bqfg257x73pjd"]
 
 [ext_resource type="Script" uid="uid://caqb3nm565y5i" path="res://player.gd" id="1_xq87f"]
+[ext_resource type="PackedScene" uid="uid://dywipbnwkmwvd" path="res://Props/flashlight.glb" id="2_2hs0m"]
 [ext_resource type="Theme" uid="uid://ceb54j815ji87" path="res://UI.tres" id="2_ecp58"]
+[ext_resource type="Texture2D" uid="uid://cqmq2xlxv0xf8" path="res://scope-1.png_1.png" id="3_1jxqw"]
 [ext_resource type="Material" uid="uid://bhge7g6oj5nm6" path="res://Rain.tres" id="3_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://bkcb8st2i2pmc" path="res://Props/Arrow.png" id="3_sweqy"]
 [ext_resource type="Texture2D" uid="uid://bw7sqdq22c8cd" path="res://Props/Smile.png" id="4_2hs0m"]
+[ext_resource type="AudioStream" uid="uid://dtccwqymrrik6" path="res://3dfa-79b0-4e77-adc2-48d24603add1.mp3" id="8_dw050"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc8b6"]
 radius = 0.25
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6kryx"]
-size = Vector2(50, 50)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_onrkg"]
 
@@ -19,6 +19,10 @@ size = Vector2(50, 50)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hqtel"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sweqy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1jxqw"]
+font_size = 120
+font_color = Color(0.873325, 0.369002, 0, 1)
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 resource_name = "GetUp"
@@ -188,10 +192,15 @@ target_position = Vector3(0, -2, 0)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="PCam"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.472824, -0.689278, -0.0126596)
-spot_range = 13.9117
-spot_angle = 11.5315
+[node name="flashlight" type="SpotLight3D" parent="PCam"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.546483, -0.755818, -0.256915)
+visible = false
+light_energy = 3.0
+light_cull_mask = 4294967279
+shadow_enabled = true
+spot_range = 16.3082
+spot_angle = 15.2594
 
 [node name="HUD" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -269,13 +278,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="HUD/AspectRatioContainer"]
-scale = Vector2(0.05, 1)
-texture = SubResource("PlaceholderTexture2D_6kryx")
-centered = false
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("3_1jxqw")
 
 [node name="Label" type="Label" parent="HUD"]
 unique_name_in_owner = true
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.100309
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -284,6 +293,7 @@ theme = ExtResource("2_ecp58")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" type="Panel" parent="HUD"]
 unique_name_in_owner = true
@@ -312,6 +322,18 @@ current_tab = 0
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
+
+[node name="Label3" type="Label" parent="HUD/Inventory"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.653333
+anchor_top = -0.0325
+anchor_right = 0.998333
+anchor_bottom = 0.0025
+theme = ExtResource("2_ecp58")
+theme_override_font_sizes/font_size = 10
+text = "Double Click Items to use them."
+metadata/_edit_use_anchors_ = true
 
 [node name="Pause Menu" type="VBoxContainer" parent="HUD"]
 unique_name_in_owner = true
@@ -582,11 +604,18 @@ layout_mode = 2
 
 [node name="zone_entered" type="Label" parent="HUD"]
 unique_name_in_owner = true
-offset_left = 174.0
-offset_top = 491.0
-offset_right = 390.0
-offset_bottom = 514.0
+z_index = 6
+anchors_preset = -1
+anchor_left = 0.148872
+anchor_top = 0.694444
+anchor_right = 0.851128
+anchor_bottom = 0.800926
+offset_top = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 0
 theme = ExtResource("2_ecp58")
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Tutorial Car Menu" type="Panel" parent="HUD"]
 unique_name_in_owner = true
@@ -688,6 +717,110 @@ layout_mode = 0
 offset_left = 399.0
 offset_right = 599.0
 offset_bottom = 400.0
+
+[node name="Label3" type="Label" parent="HUD/Tutorial Car Menu"]
+layout_mode = 0
+anchor_left = 0.653333
+anchor_top = -0.0325
+anchor_right = 1.00333
+anchor_bottom = 0.0025
+offset_left = 3.05176e-05
+theme = ExtResource("2_ecp58")
+theme_override_font_sizes/font_size = 10
+text = "Double Click Items to place them in the car"
+metadata/_edit_use_anchors_ = true
+
+[node name="Death Screen" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/Death Screen"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUD/Death Screen/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "You Died"
+label_settings = SubResource("LabelSettings_1jxqw")
+
+[node name="Exit_to_menu_death" type="Button" parent="HUD/Death Screen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.5
+offset_top = 176.0
+offset_right = 74.5
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Exit to Main Menu"
+
+[node name="Finish_Screen" type="Panel" parent="HUD"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/Finish_Screen"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUD/Finish_Screen/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "You Fixed The Car"
+label_settings = SubResource("LabelSettings_1jxqw")
+
+[node name="Exit_to_menu_death" type="Button" parent="HUD/Finish_Screen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.5
+offset_top = 176.0
+offset_right = 74.5
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Exit to Main Menu"
+
+[node name="Label2" type="Label" parent="HUD/Finish_Screen"]
+layout_mode = 2
+anchor_left = 0.260417
+anchor_top = 0.58179
+anchor_right = 0.747396
+anchor_bottom = 0.625
+offset_top = -3.05176e-05
+theme = ExtResource("2_ecp58")
+text = "You have finished the demo, Good job. Thanks for playing."
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayerAnim" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -817,6 +950,9 @@ gi_mode = 0
 mesh = SubResource("ArrayMesh_onrkg")
 skin = SubResource("Skin_i3pqv")
 
+[node name="flashlight" parent="Player_model" instance=ExtResource("2_2hs0m")]
+transform = Transform3D(0.00875427, 2.09489e-23, 2.77556e-16, 2.77556e-16, -3.82662e-10, -0.00875427, 1.32349e-23, 0.00875427, -3.82662e-10, -0.00948669, -0.00152091, 0.000738882)
+
 [node name="MCam" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
@@ -842,6 +978,12 @@ lifetime = 4.0
 process_material = ExtResource("3_i3pqv")
 draw_pass_1 = SubResource("PlaneMesh_2hs0m")
 
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79238, 0)
+stream = ExtResource("8_dw050")
+parameters/looping = true
+
 [connection signal="item_activated" from="HUD/Inventory/Inventory Container/Items" to="." method="_on_items_item_activated"]
 [connection signal="pressed" from="HUD/Pause Menu/button_return_game" to="." method="_on_button_return_game_pressed"]
 [connection signal="pressed" from="HUD/Pause Menu/HSplitContainer/button_save" to="." method="_on_button_save_pressed"]
@@ -855,3 +997,5 @@ draw_pass_1 = SubResource("PlaneMesh_2hs0m")
 [connection signal="item_activated" from="HUD/Load Menu/load_menu_vbox/existing_saves_loadmenu" to="." method="_on_existing_saves_loadmenu_item_activated"]
 [connection signal="pressed" from="HUD/Load Menu/load_menu_vbox/HBoxContainer2/load_menu_exit" to="." method="_on_load_menu_exit_pressed"]
 [connection signal="item_activated" from="HUD/Tutorial Car Menu/Inventory2" to="." method="_on_inventory_2_item_activated"]
+[connection signal="pressed" from="HUD/Death Screen/Exit_to_menu_death" to="." method="_on_exit_to_menu_death_pressed"]
+[connection signal="pressed" from="HUD/Finish_Screen/Exit_to_menu_death" to="." method="_on_exit_to_menu_death_pressed"]

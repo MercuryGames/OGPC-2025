@@ -11,7 +11,7 @@ signal car_has_been_fixed()
 
 func interact():
 	pass
-
+var timer = 0
 func _process(delta: float) -> void:
 	parts_number = 0
 	for i in parts_needed:
@@ -19,4 +19,12 @@ func _process(delta: float) -> void:
 			parts_number += 1
 			
 	if parts_number == len(parts_needed):
-		car_has_been_fixed.emit()
+		%Headlight1.show()
+		%Headlight2.show()
+		%Headlight3.show()
+		%Headlight4.show()
+		id[0] = 7006
+		id[7] = false
+		timer += delta
+		if timer >= 5:
+			car_has_been_fixed.emit()

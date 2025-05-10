@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://o3c5kxve0b4n"
+path.s3tc="res://.godot/imported/ENERGY_DRINK_Energy_drink_logo.png-0808394d01110a3670a8d2895907e7db.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "caa1c0c437668e33acaec99782ebf767"
+}
+
+[deps]
+
+source_file="res://Props/ENERGY_DRINK_Energy_drink_logo.png"
+dest_files=["res://.godot/imported/ENERGY_DRINK_Energy_drink_logo.png-0808394d01110a3670a8d2895907e7db.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

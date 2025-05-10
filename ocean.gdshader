@@ -4,7 +4,7 @@ uniform sampler2D noise;
 uniform float time;
  
 void vertex() {
-  VERTEX.y *= sin((VERTEX.z+time)/5.0);
+  VERTEX.y = (VERTEX.y*sin((VERTEX.z+time)/5.0))-3.0;
 }
 
 void fragment() {

@@ -6,8 +6,7 @@ extends Node3D
 signal message_zone_entered(message_text: String)
 
 func _on_message_1_zone_body_entered(body: Node3D) -> void:
-	if body == player:
-		message_zone_entered.emit("hemslo")
+	pass
 
 func _on_player_item_spawned(id: Variant) -> void:
 	print(id)

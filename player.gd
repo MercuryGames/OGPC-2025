@@ -73,6 +73,8 @@ var message_displayed = false
 var message_time = 10
 var message_dislayed_time = 0
 
+var lower_death_barrier = -100
+
 @onready var id = [2000, 0, 0, 0, "Agent Orange", false, false, false, false]
 
 signal item_spawned(id)
@@ -82,6 +84,11 @@ var holding_object = false
 var object_held
 
 var started = false
+var dying = false
+var dead = false
+var flashlight = false
+var animation_playing = false
+var car_opened_yet = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -90,7 +97,8 @@ func _ready():
 	save_menu.hide()
 	new_save_menu.hide()
 	%Player_model.hide()
-	
+	%Music.play()
+	animation_playing = true
 	%PlayerAnim.play("GetUp")
 	
 
@@ -99,7 +107,7 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		menu_controller(0)
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and !animation_playing:
 		var MouseEvent = event.relative * MouseSensitivity
 		CameraLook(MouseEvent)
 		
@@ -111,7 +119,7 @@ func _input(event):
 				print(interactable.id)
 				#inventoryItemNumber += 1
 				inventory.append(interactable.id)
-				inventoryList.add_item(str(interactable.id[0],",",interactable.id[4]), null, true)
+				inventoryList.add_item(str(interactable.id[4]), null, true)
 				if interactable.id[0] >= 5000 and interactable.id[0] < 6000:
 					Inventory2.add_item(str(interactable.id[4]), null, true)
 					inventory2_list.append(interactable.id)
@@ -125,6 +133,10 @@ func _input(event):
 					turotial_car_needed_parts = interactable.parts_needed
 					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 					tutorial_car_menu.show()
+					if car_opened_yet == false:
+						%zone_entered.text = "Dang, looks like my car is broken. I should go look through the other houses to find some parts and fix my car."
+						message_displayed = true
+						car_opened_yet = true
 		elif tutorial_car_menu_state == true:
 			tutorial_car_menu.hide()
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -167,6 +179,16 @@ func _input(event):
 		else:
 			MapCamera.position.y += MapCamera.position.y/10
 		print(MapCamera.position.y)
+		
+	if event.is_action_pressed("Flash_Light"):
+		if flashlight == false:
+			%flashlight.show()
+			flashlight = true
+		elif flashlight == true:
+			%flashlight.hide()
+			flashlight = false
+		
+		
 func menu_controller(type):
 	if type == 0:
 		if menu_state == false:
@@ -202,13 +224,26 @@ func CameraLook(Movement: Vector2):
 		rotate_object_local(Vector3(0,1,0), -CameraRotation.x) # first rotate y
 		MainCamera.rotate_object_local(Vector3(1,0,0), -CameraRotation.y) #then rotate x
 var time = 0
+var time2 = 0
 func _process(delta):
+	if position.y <= lower_death_barrier:
+		death()
+	
 	if started == false:
 		time += delta
 		if time >= 8:
 			%Player_model.show()
 			started = true
-	
+			animation_playing = false
+			%zone_entered.text = "Augh,my head, how long have I been out. The hurricane's probably alread close to shore by now. I should get in my car and leave. Should probably bring some food and water too."
+			message_displayed = true
+			message_time = 10
+	if dying == true:
+		time2 += delta
+		if time2 >= 4:
+			get_tree().paused = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			
 	if Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") and Input.is_action_pressed("run"):
 		hunger -= (food_drain_buff_running + food_drain_passive)*delta
 		hydration -= (hydration_drain_buff_running+hydration_drain_passive)*delta
@@ -252,7 +287,7 @@ func _process(delta):
 	
 	if message_displayed:
 		message_dislayed_time += delta
-		print(message_dislayed_time)
+		#print(message_dislayed_time)
 	if message_dislayed_time >= message_time:
 		%zone_entered.set_text("")
 		message_dislayed_time = 0
@@ -278,7 +313,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_jump") and is_on_floor():
+	if Input.is_action_just_pressed("ui_jump") and is_on_floor() and !animation_playing:
 		velocity.y += JUMP_VELOCITY
 		if Input.is_action_pressed("ui_up"):
 			velocity.x += 0.0001
@@ -291,7 +326,7 @@ func _physics_process(delta):
 		SPEED = base_speed*run_multiplier
 	else:
 		SPEED = base_speed
-	if direction:
+	if direction and !animation_playing:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
@@ -498,7 +533,13 @@ func _on_existing_saves_loadmenu_item_activated(index: int) -> void:
 	load_game(saves_menu_166.get_index(index))
 	
 func death():
-	pass
+	dying = true
+	animation_playing = true
+	%Player_model.hide()
+	%PlayerAnim.speed_scale = 2
+	%PlayerAnim.play_backwards("GetUp")
+	%"Death Screen".show()
+	
 
 
 func _on_milando_message_zone_entered(text) -> void:
@@ -534,3 +575,13 @@ func _on_inventory_2_item_activated(index: int) -> void:
 				%TireIndicator2.show()
 			elif i == turotial_car_needed_parts[3]:
 				%GearIndicator1.show()
+
+
+func _on_exit_to_menu_death_pressed() -> void:
+	get_tree().change_scene_to_packed(main_menu)
+
+
+func _on_static_body_3d_2_car_has_been_fixed() -> void:
+	%Finish_Screen.show()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().paused = true
