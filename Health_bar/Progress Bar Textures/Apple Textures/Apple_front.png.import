@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvjljd6d0eqcg"
-path="res://.godot/imported/Apple_front.png-585ab6c73e93be1fefc8be14b19be5d9.ctex"
+path="res://.godot/imported/Apple_front.png-48d86b89d672bb633a76c30acb3ce7ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Progress Bar Textures/Apple Textures/Apple_front.png"
-dest_files=["res://.godot/imported/Apple_front.png-585ab6c73e93be1fefc8be14b19be5d9.ctex"]
+source_file="res://Health_bar/Progress Bar Textures/Apple Textures/Apple_front.png"
+dest_files=["res://.godot/imported/Apple_front.png-48d86b89d672bb633a76c30acb3ce7ae.ctex"]
 
 [params]
 
